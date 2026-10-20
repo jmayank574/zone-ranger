@@ -11,25 +11,8 @@ import duckdb
 import pandas as pd
 
 from fleetopt import constants as C
+from fleetopt.cleaning import FARE_INVALID, RULES, WAIT_ANOMALIES
 from fleetopt.db import connect
-
-# Drop rules (decision 2026-10-20): each is the SQL condition for a row to be KEPT.
-RULES: dict[str, str] = {
-    "valid_zones": "PULocationID BETWEEN 1 AND 263 AND DOLocationID BETWEEN 1 AND 263",
-    "trip_time_1_to_180_min": "trip_time BETWEEN 60 AND 10800",
-    "trip_miles_0.1_to_100": "trip_miles BETWEEN 0.1 AND 100",
-    "base_fare_0_to_500": "base_passenger_fare > 0 AND base_passenger_fare < 500",
-    "request_present": "request_datetime IS NOT NULL",
-    "pickup_in_file_month": "pickup_datetime >= month_start AND pickup_datetime < month_end",
-    "dropoff_after_pickup": "dropoff_datetime > pickup_datetime",
-}
-# Timestamp anomalies that do NOT drop the row (it still counts as demand and for ETA). They
-# null the wait fields and set wait_invalid so wait calibration excludes them.
-WAIT_ANOMALIES: dict[str, str] = {
-    "request_after_pickup": "request_datetime > pickup_datetime",
-    "on_scene_before_request": "on_scene_datetime < request_datetime",
-    "pickup_delay_gt_3h": "pickup_datetime - request_datetime > INTERVAL 3 HOUR",
-}
 
 GEOFENCE_NEAR_KM = 4.0  # "inner" Brooklyn/Queens = centroid within this of a Manhattan centroid
 LAT_96TH_ST = 40.7855
@@ -58,12 +41,13 @@ def build_base(con: duckdb.DuckDBPyConnection, raw_dir: Path) -> None:
         ), m AS (
           SELECT *, month_start + INTERVAL 1 MONTH AS month_end FROM raw
         ), f AS (
-          SELECT *, {anomalies}, {keep} FROM m
+          SELECT *, {anomalies}, {keep}, ({FARE_INVALID}) AS fare_invalid FROM m
         )
         SELECT strftime(month_start, '%Y-%m') AS month, hvfhs_license_num, request_datetime,
                on_scene_datetime, pickup_datetime, dropoff_datetime,
                PULocationID AS pu, DOLocationID AS do_, trip_miles, trip_time,
-               base_passenger_fare AS fare, driver_pay, shared_request_flag, shared_match_flag,
+               CASE WHEN fare_invalid THEN NULL ELSE base_passenger_fare END AS fare, fare_invalid,
+               driver_pay, shared_request_flag, shared_match_flag,
                wav_request_flag, access_a_ride_flag,
                ({any_anomaly}) AS wait_invalid,
                CASE WHEN NOT ({any_anomaly})
@@ -107,8 +91,13 @@ def data_quality(con: duckdb.DuckDBPyConnection) -> dict:
         "per_rule_independent_drops": per_rule,
         "sequential_waterfall": waterfall,
         "wait_fields_nulled": wait_flag_counts(con, "clean"),
-        "note": "Independent drops overlap; waterfall drops sum to total. Wait anomalies keep the "
-        "row but null wait fields (wait_invalid=true).",
+        "fare_nulled": _q(
+            con,
+            """SELECT count(*) FILTER (WHERE fare_invalid) AS fare_invalid, count(*) AS rows,
+                      count(*) FILTER (WHERE fare_invalid) * 1.0 / count(*) AS share FROM clean""",
+        )[0],
+        "note": "Independent drops overlap; waterfall drops sum to total. Wait anomalies and invalid "
+        "fares keep the row but null the field (wait_invalid / fare_invalid = true).",
     }
 
 
@@ -342,6 +331,9 @@ def month_comparison(con: duckdb.DuckDBPyConnection) -> dict:
             "pickup_delay_min_p50_p90_p99": pq,
             "independent_drops": drops,
             "wait_invalid_share_of_clean": wf["share"],
+            "fare_invalid_share_of_clean": con.execute(
+                f"SELECT avg(fare_invalid::int) FROM clean WHERE month = '{m}'"
+            ).fetchone()[0],
         }
     base_m = months[0]
     b = out[base_m]

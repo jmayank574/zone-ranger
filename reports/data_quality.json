@@ -1,13 +1,12 @@
 {
   "raw_rows": 80035989,
-  "clean_rows": 76509743,
-  "dropped_total": 3526246,
-  "dropped_share": 0.04405825484333054,
+  "clean_rows": 76601370,
+  "dropped_total": 3434619,
+  "dropped_share": 0.04291343235603673,
   "per_rule_independent_drops": {
     "valid_zones": 3405635,
     "trip_time_1_to_180_min": 7779,
     "trip_miles_0.1_to_100": 31071,
-    "base_fare_0_to_500": 98570,
     "request_present": 0,
     "pickup_in_file_month": 0,
     "dropoff_after_pickup": 15
@@ -29,33 +28,33 @@
       "remaining": 76601370
     },
     {
-      "rule": "base_fare_0_to_500",
-      "dropped_here": 91627,
-      "remaining": 76509743
-    },
-    {
       "rule": "request_present",
       "dropped_here": 0,
-      "remaining": 76509743
+      "remaining": 76601370
     },
     {
       "rule": "pickup_in_file_month",
       "dropped_here": 0,
-      "remaining": 76509743
+      "remaining": 76601370
     },
     {
       "rule": "dropoff_after_pickup",
       "dropped_here": 0,
-      "remaining": 76509743
+      "remaining": 76601370
     }
   ],
   "wait_fields_nulled": {
-    "rows": 76509743,
-    "wait_invalid": 987340,
-    "request_after_pickup": 763246,
-    "on_scene_before_request": 830088,
+    "rows": 76601370,
+    "wait_invalid": 987562,
+    "request_after_pickup": 763443,
+    "on_scene_before_request": 830289,
     "pickup_delay_gt_3h": 3,
-    "wait_invalid_share": 0.01290476168505755
+    "wait_invalid_share": 0.012892223729157846
   },
-  "note": "Independent drops overlap; waterfall drops sum to total. Wait anomalies keep the row but null wait fields (wait_invalid=true)."
+  "fare_nulled": {
+    "fare_invalid": 91627,
+    "rows": 76601370,
+    "share": 0.0011961535
+  },
+  "note": "Independent drops overlap; waterfall drops sum to total. Wait anomalies and invalid fares keep the row but null the field (wait_invalid / fare_invalid = true)."
 }

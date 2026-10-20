@@ -38,7 +38,8 @@
     "do_": 0.0,
     "trip_miles": 0.0,
     "trip_time": 0.0,
-    "fare": 0.0,
+    "fare": 0.001231571,
+    "fare_invalid": 0.0,
     "driver_pay": 0.0,
     "shared_request_flag": 0.0,
     "shared_match_flag": 0.0,
@@ -53,75 +54,75 @@
   },
   "distributions_clean": {
     "wait_min_on_scene_minus_request": {
-      "n": 65200318,
-      "mean": 3.7175836182270636,
+      "n": 65278589,
+      "mean": 3.7184107027802757,
       "min": 0.0,
-      "p10": 1.0190584665055291,
-      "p25": 1.7832036568785934,
-      "p50": 2.9777483865816503,
-      "p75": 4.751049569171326,
-      "p90": 7.227666462639585,
-      "p99": 14.690396049972488,
+      "p10": 1.0197319691049191,
+      "p25": 1.7825080797012869,
+      "p50": 2.9738036226798332,
+      "p75": 4.750719416697374,
+      "p90": 7.213169061071123,
+      "p99": 14.710743556463658,
       "max": 166.7
     },
     "pickup_delay_min_pickup_minus_request": {
-      "n": 75522403,
-      "mean": 4.631111526381413,
+      "n": 75613808,
+      "mean": 4.631546143441373,
       "min": 0.0,
-      "p10": 1.9402224802327819,
-      "p25": 2.752403938375061,
-      "p50": 3.930693526930482,
-      "p75": 5.643627451559662,
-      "p90": 8.072303939974217,
-      "p99": 15.502526519938968,
+      "p10": 1.9431824495519854,
+      "p25": 2.75308234646045,
+      "p50": 3.9302016286268096,
+      "p75": 5.65040303115033,
+      "p90": 8.071549713722144,
+      "p99": 15.523284330603099,
       "max": 166.7
     },
     "trip_time_min": {
-      "n": 76509743,
-      "mean": 18.215812591998535,
+      "n": 76601370,
+      "mean": 18.215100027584082,
       "min": 1.0,
-      "p10": 6.246901041867656,
-      "p25": 9.454708559700775,
-      "p50": 15.138250736816659,
-      "p75": 23.639944338919335,
-      "p90": 34.13653151386145,
-      "p99": 60.547404592692565,
+      "p10": 6.2462364042773215,
+      "p25": 9.449392155738172,
+      "p50": 15.158629011366433,
+      "p75": 23.648086067983154,
+      "p90": 34.14047565404624,
+      "p99": 60.49011362096555,
       "max": 179.96666666666667
     },
     "trip_miles": {
-      "n": 76509743,
-      "mean": 4.431105701531195,
+      "n": 76601370,
+      "mean": 4.43124208905125,
       "min": 0.1,
-      "p10": 0.9365158064763536,
-      "p25": 1.4664672579821223,
-      "p50": 2.7646561686502134,
-      "p75": 5.72735675380629,
-      "p90": 10.336074689421018,
-      "p99": 20.27620223253082,
+      "p10": 0.9363222712936163,
+      "p25": 1.4689932614143417,
+      "p50": 2.7645618566779984,
+      "p75": 5.726456451634847,
+      "p90": 10.341322172668848,
+      "p99": 20.27791999833031,
       "max": 99.7
     },
     "base_passenger_fare": {
       "n": 76509743,
-      "mean": 24.070222979431062,
+      "mean": 24.070222979430905,
       "min": 0.01,
-      "p10": 8.991902917059372,
-      "p25": 12.225310989527225,
-      "p50": 18.66704996837074,
-      "p75": 29.49733189236509,
-      "p90": 45.865520383335614,
-      "p99": 93.1345511018448,
+      "p10": 8.973558001795414,
+      "p25": 12.225942480310197,
+      "p50": 18.65210085450937,
+      "p75": 29.501449455682064,
+      "p90": 45.89029649233961,
+      "p99": 93.43232975320737,
       "max": 499.9
     },
     "pickup_delay_min_uber_only": {
-      "n": 55381417,
-      "mean": 4.5757421994695955,
+      "n": 55387868,
+      "mean": 4.575829073856454,
       "min": 0.0,
-      "p10": 1.9015917681830978,
-      "p25": 2.693117817360311,
-      "p50": 3.838713285242465,
-      "p75": 5.557104008708123,
-      "p90": 8.047289714877763,
-      "p99": 15.681832670120011,
+      "p10": 1.9013578555919461,
+      "p25": 2.6936730789031618,
+      "p50": 3.8384921420143456,
+      "p75": 5.555609159214154,
+      "p90": 8.049403143287782,
+      "p99": 15.726043505012816,
       "max": 166.7
     }
   },
@@ -129,153 +130,153 @@
     "by_hour_of_day": [
       {
         "hour": 0,
-        "requests": 2514579,
-        "per_day": 20781.6446280992
+        "requests": 2514818,
+        "per_day": 20783.6198347107
       },
       {
         "hour": 1,
-        "requests": 1742286,
-        "per_day": 14519.05
+        "requests": 1742441,
+        "per_day": 14520.3416666667
       },
       {
         "hour": 2,
-        "requests": 1239817,
-        "per_day": 10331.8083333333
+        "requests": 1239904,
+        "per_day": 10332.5333333333
       },
       {
         "hour": 3,
-        "requests": 1058376,
-        "per_day": 8819.8
+        "requests": 1058462,
+        "per_day": 8820.5166666667
       },
       {
         "hour": 4,
-        "requests": 1125537,
-        "per_day": 9379.475
+        "requests": 1125603,
+        "per_day": 9380.025
       },
       {
         "hour": 5,
-        "requests": 1418623,
-        "per_day": 11821.8583333333
+        "requests": 1418732,
+        "per_day": 11822.7666666667
       },
       {
         "hour": 6,
-        "requests": 2290318,
-        "per_day": 19085.9833333333
+        "requests": 2290493,
+        "per_day": 19087.4416666667
       },
       {
         "hour": 7,
-        "requests": 3482244,
-        "per_day": 29018.7
+        "requests": 3482539,
+        "per_day": 29021.1583333333
       },
       {
         "hour": 8,
-        "requests": 4055653,
-        "per_day": 33797.1083333333
+        "requests": 4055988,
+        "per_day": 33799.9
       },
       {
         "hour": 9,
-        "requests": 3684622,
-        "per_day": 30705.1833333333
+        "requests": 3684910,
+        "per_day": 30707.5833333333
       },
       {
         "hour": 10,
-        "requests": 3374262,
-        "per_day": 28118.85
+        "requests": 3374554,
+        "per_day": 28121.2833333333
       },
       {
         "hour": 11,
-        "requests": 3298565,
-        "per_day": 27488.0416666667
+        "requests": 3298855,
+        "per_day": 27490.4583333333
       },
       {
         "hour": 12,
-        "requests": 3364926,
-        "per_day": 28041.05
+        "requests": 3365229,
+        "per_day": 28043.575
       },
       {
         "hour": 13,
-        "requests": 3519316,
-        "per_day": 29327.6333333333
+        "requests": 3519633,
+        "per_day": 29330.275
       },
       {
         "hour": 14,
-        "requests": 3815328,
-        "per_day": 31794.4
+        "requests": 3815685,
+        "per_day": 31797.375
       },
       {
         "hour": 15,
-        "requests": 3850169,
-        "per_day": 32084.7416666667
+        "requests": 3850530,
+        "per_day": 32087.75
       },
       {
         "hour": 16,
-        "requests": 4031616,
-        "per_day": 33596.8
+        "requests": 4032005,
+        "per_day": 33600.0416666667
       },
       {
         "hour": 17,
-        "requests": 4478481,
-        "per_day": 37320.675
+        "requests": 4478902,
+        "per_day": 37324.1833333333
       },
       {
         "hour": 18,
-        "requests": 4575138,
-        "per_day": 38126.15
+        "requests": 4575540,
+        "per_day": 38129.5
       },
       {
         "hour": 19,
-        "requests": 4350723,
-        "per_day": 36256.025
+        "requests": 4352043,
+        "per_day": 36267.025
       },
       {
         "hour": 20,
-        "requests": 4095579,
-        "per_day": 34129.825
+        "requests": 4106106,
+        "per_day": 34217.55
       },
       {
         "hour": 21,
-        "requests": 3970516,
-        "per_day": 33087.6333333333
+        "requests": 3994802,
+        "per_day": 33290.0166666667
       },
       {
         "hour": 22,
-        "requests": 3850485,
-        "per_day": 32087.375
+        "requests": 3877151,
+        "per_day": 32309.5916666667
       },
       {
         "hour": 23,
-        "requests": 3322584,
-        "per_day": 27459.3719008264
+        "requests": 3346445,
+        "per_day": 27656.5702479339
       }
     ],
     "by_day_of_week": [
       {
         "iso_dow": 1,
-        "requests": 9424069
+        "requests": 9424922
       },
       {
         "iso_dow": 2,
-        "requests": 9826267
+        "requests": 9840205
       },
       {
         "iso_dow": 3,
-        "requests": 11076412
+        "requests": 11092243
       },
       {
         "iso_dow": 4,
-        "requests": 10951812
+        "requests": 10965153
       },
       {
         "iso_dow": 5,
-        "requests": 12037010
+        "requests": 12054421
       },
       {
         "iso_dow": 6,
-        "requests": 12621853
+        "requests": 12639430
       },
       {
         "iso_dow": 7,
-        "requests": 10572320
+        "requests": 10584996
       }
     ],
     "top_pickup_zones": [
@@ -283,118 +284,118 @@
         "location_id": 138,
         "zone": "LaGuardia Airport",
         "borough": "Queens",
-        "requests": 1300797
+        "requests": 1303395
       },
       {
         "location_id": 132,
         "zone": "JFK Airport",
         "borough": "Queens",
-        "requests": 1116335
+        "requests": 1118186
       },
       {
         "location_id": 61,
         "zone": "Crown Heights North",
         "borough": "Brooklyn",
-        "requests": 1027773
+        "requests": 1029126
       },
       {
         "location_id": 79,
         "zone": "East Village",
         "borough": "Manhattan",
-        "requests": 958535
+        "requests": 960287
       },
       {
         "location_id": 76,
         "zone": "East New York",
         "borough": "Brooklyn",
-        "requests": 865345
+        "requests": 866145
       },
       {
         "location_id": 161,
         "zone": "Midtown Center",
         "borough": "Manhattan",
-        "requests": 863049
+        "requests": 864052
       },
       {
         "location_id": 230,
         "zone": "Times Sq/Theatre District",
         "borough": "Manhattan",
-        "requests": 861920
+        "requests": 862970
       },
       {
         "location_id": 37,
         "zone": "Bushwick South",
         "borough": "Brooklyn",
-        "requests": 853899
+        "requests": 855140
       },
       {
         "location_id": 231,
         "zone": "TriBeCa/Civic Center",
         "borough": "Manhattan",
-        "requests": 853870
+        "requests": 855039
       },
       {
         "location_id": 234,
         "zone": "Union Sq",
         "borough": "Manhattan",
-        "requests": 806165
+        "requests": 807375
       },
       {
         "location_id": 68,
         "zone": "East Chelsea",
         "borough": "Manhattan",
-        "requests": 781883
+        "requests": 782833
       },
       {
         "location_id": 181,
         "zone": "Park Slope",
         "borough": "Brooklyn",
-        "requests": 777988
+        "requests": 779603
       },
       {
         "location_id": 255,
         "zone": "Williamsburg (North Side)",
         "borough": "Brooklyn",
-        "requests": 776153
+        "requests": 777786
       },
       {
         "location_id": 246,
         "zone": "West Chelsea/Hudson Yards",
         "borough": "Manhattan",
-        "requests": 770675
+        "requests": 771626
       },
       {
         "location_id": 148,
         "zone": "Lower East Side",
         "borough": "Manhattan",
-        "requests": 757579
+        "requests": 758962
       }
     ],
     "by_borough": [
       {
         "borough": "Manhattan",
-        "requests": 28779287,
-        "share": 0.3761519236
+        "requests": 28815841,
+        "share": 0.3761791858
       },
       {
         "borough": "Brooklyn",
-        "requests": 21077868,
-        "share": 0.2754925997
+        "requests": 21105710,
+        "share": 0.2755265343
       },
       {
         "borough": "Queens",
-        "requests": 15717975,
-        "share": 0.2054375611
+        "requests": 15735539,
+        "share": 0.2054211171
       },
       {
         "borough": "Bronx",
-        "requests": 9736886,
-        "share": 0.1272633474
+        "requests": 9745760,
+        "share": 0.1272269674
       },
       {
         "borough": "Staten Island",
-        "requests": 1197724,
-        "share": 0.0156545291
+        "requests": 1198517,
+        "share": 0.0156461562
       },
       {
         "borough": "EWR",
@@ -478,23 +479,23 @@
         262,
         263
       ],
-      "pickups_per_day": 235895.79508196723,
-      "intra_geofence_share": 0.7274252485824266,
-      "intra_mean_trip_min": 14.837647239028387,
-      "intra_mean_trip_miles": 2.5930575299573335,
-      "intra_mean_pickup_delay_min": 4.135783736466612,
+      "pickups_per_day": 236195.4180327869,
+      "intra_geofence_share": 0.7273451779526408,
+      "intra_mean_trip_min": 14.837350277379608,
+      "intra_mean_trip_miles": 2.5934522872038808,
+      "intra_mean_pickup_delay_min": 4.136631413463742,
       "little_law_fleet_sizing": {
         "sample_5%": {
-          "peak_requests_per_hour": 773.5323529411766,
-          "mean_requests_per_hour": 363.306585550887,
-          "fleet_for_peak_at_target_util": 318.8166716921328,
-          "fleet_for_mean_at_target_util": 149.73930433388747
+          "peak_requests_per_hour": 773.5764705882353,
+          "mean_requests_per_hour": 363.7272088001867,
+          "fleet_for_peak_at_target_util": 318.82847390157474,
+          "fleet_for_mean_at_target_util": 149.90966673283225
         },
         "sample_10%": {
-          "peak_requests_per_hour": 1547.064705882353,
-          "mean_requests_per_hour": 726.613171101774,
-          "fleet_for_peak_at_target_util": 637.6333433842656,
-          "fleet_for_mean_at_target_util": 299.47860866777495
+          "peak_requests_per_hour": 1547.1529411764707,
+          "mean_requests_per_hour": 727.4544176003734,
+          "fleet_for_peak_at_target_util": 637.6569478031495,
+          "fleet_for_mean_at_target_util": 299.8193334656645
         }
       },
       "target_utilization": 0.6
@@ -556,23 +557,23 @@
         262,
         263
       ],
-      "pickups_per_day": 192699.94262295082,
-      "intra_geofence_share": 0.688333935291311,
-      "intra_mean_trip_min": 14.539553954163825,
-      "intra_mean_trip_miles": 2.2730233464771143,
-      "intra_mean_pickup_delay_min": 4.063930709835327,
+      "pickups_per_day": 192951.6393442623,
+      "intra_geofence_share": 0.6882138563557504,
+      "intra_mean_trip_min": 14.539339717573414,
+      "intra_mean_trip_miles": 2.2733829240393915,
+      "intra_mean_pickup_delay_min": 4.064877508800737,
       "little_law_fleet_sizing": {
         "sample_5%": {
-          "peak_requests_per_hour": 654.5617647058824,
-          "mean_requests_per_hour": 280.88377295362585,
-          "fleet_for_peak_at_target_util": 264.3621137298296,
-          "fleet_for_mean_at_target_util": 113.44235476967626
+          "peak_requests_per_hour": 654.6,
+          "mean_requests_per_hour": 281.2010961328976,
+          "fleet_for_peak_at_target_util": 264.3736605312099,
+          "fleet_for_mean_at_target_util": 113.5688407119505
         },
         "sample_10%": {
-          "peak_requests_per_hour": 1309.1235294117648,
-          "mean_requests_per_hour": 561.7675459072517,
-          "fleet_for_peak_at_target_util": 528.7242274596592,
-          "fleet_for_mean_at_target_util": 226.8847095393525
+          "peak_requests_per_hour": 1309.2,
+          "mean_requests_per_hour": 562.4021922657952,
+          "fleet_for_peak_at_target_util": 528.7473210624198,
+          "fleet_for_mean_at_target_util": 227.137681423901
         }
       },
       "target_utilization": 0.6
@@ -679,23 +680,23 @@
         262,
         263
       ],
-      "pickups_per_day": 321402.9016393443,
-      "intra_geofence_share": 0.7714758407773462,
-      "intra_mean_trip_min": 15.73756923779468,
-      "intra_mean_trip_miles": 2.9349493004040155,
-      "intra_mean_pickup_delay_min": 4.213259739880831,
+      "pickups_per_day": 321838.131147541,
+      "intra_geofence_share": 0.7714702421938409,
+      "intra_mean_trip_min": 15.737980442307967,
+      "intra_mean_trip_miles": 2.935610132539528,
+      "intra_mean_pickup_delay_min": 4.21408595441509,
       "little_law_fleet_sizing": {
         "sample_5%": {
-          "peak_requests_per_hour": 1140.2235294117647,
-          "mean_requests_per_hour": 525.0903069561159,
-          "fleet_for_peak_at_target_util": 498.4540761300074,
-          "fleet_for_mean_at_target_util": 229.545696161576
+          "peak_requests_per_hour": 1140.2911764705884,
+          "mean_requests_per_hour": 525.7959160052909,
+          "fleet_for_peak_at_target_util": 498.49667316195735,
+          "fleet_for_mean_at_target_util": 229.86016229824085
         },
         "sample_10%": {
-          "peak_requests_per_hour": 2280.4470588235295,
-          "mean_requests_per_hour": 1050.1806139122318,
-          "fleet_for_peak_at_target_util": 996.9081522600148,
-          "fleet_for_mean_at_target_util": 459.091392323152
+          "peak_requests_per_hour": 2280.582352941177,
+          "mean_requests_per_hour": 1051.5918320105818,
+          "fleet_for_peak_at_target_util": 996.9933463239147,
+          "fleet_for_mean_at_target_util": 459.7203245964817
         }
       },
       "target_utilization": 0.6
@@ -713,8 +714,8 @@
     "months": {
       "2025-01": {
         "raw_rows": 20405666,
-        "clean_rows": 19566693,
-        "dropped_share": 0.04111470804236428,
+        "clean_rows": 19582955,
+        "dropped_share": 0.04031777252455271,
         "license_share": {
           "HV0003": 0.7525583826,
           "HV0005": 0.2474416174
@@ -724,30 +725,30 @@
           "HV0005": 0.9972122377
         },
         "uber_wait_min_p50_p90_p99": [
-          2.7727447732851287,
-          7.015568764647695,
-          14.64581636600644
+          2.770797547614985,
+          7.011218620523459,
+          14.629112507384216
         ],
         "pickup_delay_min_p50_p90_p99": [
-          3.844036801610341,
-          7.9310312936632785,
-          15.29127452902454
+          3.8447612304074545,
+          7.937064587344611,
+          15.319154095488317
         ],
         "independent_drops": {
           "valid_zones": 815783,
           "trip_time_1_to_180_min": 1846,
           "trip_miles_0.1_to_100": 7476,
-          "base_fare_0_to_500": 17469,
           "request_present": 0,
           "pickup_in_file_month": 0,
           "dropoff_after_pickup": 4
         },
-        "wait_invalid_share_of_clean": 0.0122051284
+        "wait_invalid_share_of_clean": 0.0121978527,
+        "fare_invalid_share_of_clean": 0.0008304160429312123
       },
       "2025-02": {
         "raw_rows": 19339461,
-        "clean_rows": 18525944,
-        "dropped_share": 0.04206513304584858,
+        "clean_rows": 18527639,
+        "dropped_share": 0.041977488410871455,
         "license_share": {
           "HV0003": 0.7456062503,
           "HV0005": 0.2543937497
@@ -757,30 +758,30 @@
           "HV0005": 0.9972661701
         },
         "uber_wait_min_p50_p90_p99": [
-          2.9571593467140396,
-          7.2437253494454446,
-          14.93360636898397
+          2.9590124744761703,
+          7.2419959948560955,
+          14.922064137707785
         ],
         "pickup_delay_min_p50_p90_p99": [
-          3.998164029364549,
-          8.125901959758735,
-          15.621469988928753
+          3.995471804290281,
+          8.130485047147308,
+          15.616304680680733
         ],
         "independent_drops": {
           "valid_zones": 804916,
           "trip_time_1_to_180_min": 1729,
           "trip_miles_0.1_to_100": 7336,
-          "base_fare_0_to_500": 1939,
           "request_present": 0,
           "pickup_in_file_month": 0,
           "dropoff_after_pickup": 4
         },
-        "wait_invalid_share_of_clean": 0.0126684503
+        "wait_invalid_share_of_clean": 0.0126682628,
+        "fare_invalid_share_of_clean": 9.148494311660541e-05
       },
       "2025-03": {
         "raw_rows": 20536879,
-        "clean_rows": 19560466,
-        "dropped_share": 0.04754437127472,
+        "clean_rows": 19621390,
+        "dropped_share": 0.044577805614962274,
         "license_share": {
           "HV0005": 0.2916557087,
           "HV0003": 0.7083442913
@@ -790,30 +791,30 @@
           "HV0003": 0.0
         },
         "uber_wait_min_p50_p90_p99": [
-          2.9678612566636597,
-          7.568802208108268,
-          15.276975240686257
+          2.968577380184707,
+          7.575837984439455,
+          15.263938500905683
         ],
         "pickup_delay_min_p50_p90_p99": [
-          4.030624019218274,
-          8.411311923673203,
-          16.014412985770072
+          4.034262502842907,
+          8.410513218736874,
+          15.97362336855815
         ],
         "independent_drops": {
           "valid_zones": 908216,
           "trip_time_1_to_180_min": 2015,
           "trip_miles_0.1_to_100": 7878,
-          "base_fare_0_to_500": 64590,
           "request_present": 0,
           "pickup_in_file_month": 0,
           "dropoff_after_pickup": 4
         },
-        "wait_invalid_share_of_clean": 0.0134987582
+        "wait_invalid_share_of_clean": 0.0134632664,
+        "fare_invalid_share_of_clean": 0.003104978801196042
       },
       "2025-04": {
         "raw_rows": 19753983,
-        "clean_rows": 18856640,
-        "dropped_share": 0.04542592752054109,
+        "clean_rows": 18869386,
+        "dropped_share": 0.04478069055744349,
         "license_share": {
           "HV0005": 0.2730315704,
           "HV0003": 0.7269684296
@@ -823,25 +824,25 @@
           "HV0003": 0.0
         },
         "uber_wait_min_p50_p90_p99": [
-          2.7944683385308022,
-          6.836893574778774,
-          14.307050720177395
+          2.795855954197181,
+          6.829967472303939,
+          14.323383973647738
         ],
         "pickup_delay_min_p50_p90_p99": [
-          3.850750609500766,
-          7.772164238214107,
-          14.998061137860946
+          3.849407971880818,
+          7.776500836906443,
+          15.027714719706609
         ],
         "independent_drops": {
           "valid_zones": 876720,
           "trip_time_1_to_180_min": 2189,
           "trip_miles_0.1_to_100": 8381,
-          "base_fare_0_to_500": 14572,
           "request_present": 0,
           "pickup_in_file_month": 0,
           "dropoff_after_pickup": 3
         },
-        "wait_invalid_share_of_clean": 0.0132467396
+        "wait_invalid_share_of_clean": 0.0132389575,
+        "fare_invalid_share_of_clean": 0.0006754856782303356
       }
     },
     "flags": {
