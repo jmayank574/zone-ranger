@@ -5,10 +5,6 @@ def _todo(stage: str, phase: int) -> None:
     raise SystemExit(f"fleetopt-{stage} is not implemented yet (planned for Phase {phase}).")
 
 
-def train() -> None:
-    _todo("train", 1)
-
-
 def replay() -> None:
     _todo("replay", 2)
 

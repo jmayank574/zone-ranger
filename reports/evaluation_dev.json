@@ -1,0 +1,1033 @@
+{
+  "splits": {
+    "train": [
+      "2025-01-08",
+      "2025-01-15"
+    ],
+    "val": [
+      "2025-01-15",
+      "2025-01-18"
+    ],
+    "test": [
+      "2025-01-18",
+      "2025-01-22"
+    ]
+  },
+  "geofence_zones": 69,
+  "eta": {
+    "main": {
+      "params": {
+        "objective": "l1",
+        "metric": "l1",
+        "num_threads": 0,
+        "num_leaves": 31,
+        "learning_rate": 0.1,
+        "min_data_in_leaf": 20,
+        "seed": 42,
+        "verbosity": -1
+      },
+      "best_iteration": 40,
+      "val": {
+        "n": 5565,
+        "mae": 3.387442165311496,
+        "rmse": 5.007876955138787,
+        "p90_abs_error": 7.1482168087275415,
+        "by_time_band": {
+          "am_peak": {
+            "n": 1007,
+            "mae": 3.587702986264605,
+            "rmse": 5.099303326614662,
+            "p90_abs_error": 7.617853783101295
+          },
+          "midday": {
+            "n": 1492,
+            "mae": 3.839846366697527,
+            "rmse": 5.765254126810436,
+            "p90_abs_error": 8.185431938596762
+          },
+          "overnight": {
+            "n": 363,
+            "mae": 2.3837598996606033,
+            "rmse": 3.1233104287249476,
+            "p90_abs_error": 4.681795031833777
+          },
+          "pm_evening": {
+            "n": 2703,
+            "mae": 3.197907184646878,
+            "rmse": 4.7210913630691795,
+            "p90_abs_error": 6.56444728788024
+          }
+        },
+        "by_trip_length_tercile": {
+          "long": {
+            "n": 1963,
+            "mae": 5.246258518061772,
+            "rmse": 7.382724644581892,
+            "p90_abs_error": 11.17827481422408
+          },
+          "medium": {
+            "n": 1775,
+            "mae": 2.4438714719323174,
+            "rmse": 3.0739971220525413,
+            "p90_abs_error": 4.995929474307721
+          },
+          "short": {
+            "n": 1827,
+            "mae": 2.306972258524003,
+            "rmse": 2.9406028419281776,
+            "p90_abs_error": 4.813618055575701
+          }
+        }
+      },
+      "test": {
+        "n": 7066,
+        "mae": 3.1534540206694808,
+        "rmse": 4.547493590938171,
+        "p90_abs_error": 6.3774400051384035,
+        "by_time_band": {
+          "am_peak": {
+            "n": 862,
+            "mae": 3.4225059793793164,
+            "rmse": 4.808668198835471,
+            "p90_abs_error": 6.940172215524167
+          },
+          "midday": {
+            "n": 2241,
+            "mae": 3.3580256772866246,
+            "rmse": 5.048743411093676,
+            "p90_abs_error": 6.6427968364022885
+          },
+          "overnight": {
+            "n": 705,
+            "mae": 2.620420755130271,
+            "rmse": 3.8515221048626955,
+            "p90_abs_error": 5.146042169688912
+          },
+          "pm_evening": {
+            "n": 3258,
+            "mae": 3.056898029668328,
+            "rmse": 4.2413990090857245,
+            "p90_abs_error": 6.245942835655894
+          }
+        },
+        "by_trip_length_tercile": {
+          "long": {
+            "n": 2137,
+            "mae": 4.638954962566074,
+            "rmse": 6.744116256696517,
+            "p90_abs_error": 9.826088242594517
+          },
+          "medium": {
+            "n": 2282,
+            "mae": 2.5508014171085094,
+            "rmse": 3.23874142800053,
+            "p90_abs_error": 5.29831218971441
+          },
+          "short": {
+            "n": 2647,
+            "mae": 2.473717612846707,
+            "rmse": 3.072504807891515,
+            "p90_abs_error": 4.899375160036335
+          }
+        }
+      },
+      "features": [
+        "pu",
+        "do_",
+        "hour",
+        "slot_of_day",
+        "dow",
+        "is_weekend",
+        "us_holiday",
+        "centroid_km",
+        "route_median",
+        "pu_median",
+        "do_median",
+        "route_band_median"
+      ]
+    },
+    "ablation_trip_miles": {
+      "params": {
+        "objective": "l1",
+        "metric": "l1",
+        "num_threads": 0,
+        "num_leaves": 31,
+        "learning_rate": 0.1,
+        "min_data_in_leaf": 20,
+        "seed": 42,
+        "verbosity": -1
+      },
+      "best_iteration": 40,
+      "val": {
+        "n": 5565,
+        "mae": 2.8148231625084126,
+        "rmse": 4.3133581492930135,
+        "p90_abs_error": 6.155123194754517,
+        "by_time_band": {
+          "am_peak": {
+            "n": 1007,
+            "mae": 3.0689950823448116,
+            "rmse": 4.5145291525610025,
+            "p90_abs_error": 6.545654829760904
+          },
+          "midday": {
+            "n": 1492,
+            "mae": 3.2177254872880265,
+            "rmse": 4.9443816759359756,
+            "p90_abs_error": 7.273301807957119
+          },
+          "overnight": {
+            "n": 363,
+            "mae": 1.9594830605262845,
+            "rmse": 2.636972473191336,
+            "p90_abs_error": 4.076910051761026
+          },
+          "pm_evening": {
+            "n": 2703,
+            "mae": 2.612606020508071,
+            "rmse": 4.035293564859319,
+            "p90_abs_error": 5.637193484670019
+          }
+        },
+        "by_trip_length_tercile": {
+          "long": {
+            "n": 1963,
+            "mae": 4.527044677637086,
+            "rmse": 6.461512268928518,
+            "p90_abs_error": 9.594627798929595
+          },
+          "medium": {
+            "n": 1775,
+            "mae": 2.1375545544984225,
+            "rmse": 2.7418595981137863,
+            "p90_abs_error": 4.487174800423842
+          },
+          "short": {
+            "n": 1827,
+            "mae": 1.6331378560060301,
+            "rmse": 2.123135628148376,
+            "p90_abs_error": 3.394519053420081
+          }
+        }
+      },
+      "test": {
+        "n": 7066,
+        "mae": 2.5524924304815575,
+        "rmse": 3.7248474328047623,
+        "p90_abs_error": 5.582269887053984,
+        "by_time_band": {
+          "am_peak": {
+            "n": 862,
+            "mae": 2.909798450593079,
+            "rmse": 4.126358246045945,
+            "p90_abs_error": 6.144459611332393
+          },
+          "midday": {
+            "n": 2241,
+            "mae": 2.6601615727579393,
+            "rmse": 4.0814627644389985,
+            "p90_abs_error": 5.778766693487185
+          },
+          "overnight": {
+            "n": 705,
+            "mae": 2.14866016384363,
+            "rmse": 3.0815492067235573,
+            "p90_abs_error": 4.536304658791837
+          },
+          "pm_evening": {
+            "n": 3258,
+            "mae": 2.471282304883717,
+            "rmse": 3.4746308414159937,
+            "p90_abs_error": 5.421897544293996
+          }
+        },
+        "by_trip_length_tercile": {
+          "long": {
+            "n": 2137,
+            "mae": 3.958481684017397,
+            "rmse": 5.580264344815332,
+            "p90_abs_error": 8.191518306361404
+          },
+          "medium": {
+            "n": 2282,
+            "mae": 2.221332582306078,
+            "rmse": 2.8700740687115585,
+            "p90_abs_error": 4.6802836833205435
+          },
+          "short": {
+            "n": 2647,
+            "mae": 1.7028920295485594,
+            "rmse": 2.1899560983397364,
+            "p90_abs_error": 3.592621002556617
+          }
+        }
+      },
+      "features": [
+        "pu",
+        "do_",
+        "hour",
+        "slot_of_day",
+        "dow",
+        "is_weekend",
+        "us_holiday",
+        "centroid_km",
+        "route_median",
+        "pu_median",
+        "do_median",
+        "route_band_median",
+        "trip_miles"
+      ]
+    },
+    "baselines": {
+      "route_median": {
+        "val": {
+          "n": 5565,
+          "mae": 5.766828391734053,
+          "rmse": 7.989455335056548,
+          "p90_abs_error": 12.333333333333334,
+          "by_time_band": {
+            "am_peak": {
+              "n": 1007,
+              "mae": 5.901588877855015,
+              "rmse": 8.22908107234071,
+              "p90_abs_error": 13.476666666666665
+            },
+            "midday": {
+              "n": 1492,
+              "mae": 6.496833109919571,
+              "rmse": 9.037546917798325,
+              "p90_abs_error": 14.20833333333334
+            },
+            "overnight": {
+              "n": 363,
+              "mae": 4.616689623507805,
+              "rmse": 5.615872504775993,
+              "p90_abs_error": 8.793333333333335
+            },
+            "pm_evening": {
+              "n": 2703,
+              "mae": 5.4681341719077565,
+              "rmse": 7.541208923521422,
+              "p90_abs_error": 11.258333333333333
+            }
+          },
+          "by_trip_length_tercile": {
+            "long": {
+              "n": 1963,
+              "mae": 10.120941586007811,
+              "rmse": 12.178630080731155,
+              "p90_abs_error": 18.689999999999998
+            },
+            "medium": {
+              "n": 1775,
+              "mae": 1.7456056338028167,
+              "rmse": 2.1553364460376376,
+              "p90_abs_error": 3.4000000000000004
+            },
+            "short": {
+              "n": 1827,
+              "mae": 4.99537037037037,
+              "rmse": 5.5277449266433685,
+              "p90_abs_error": 8.1
+            }
+          }
+        },
+        "test": {
+          "n": 7066,
+          "mae": 5.27646358146995,
+          "rmse": 7.074944215104297,
+          "p90_abs_error": 10.5,
+          "by_time_band": {
+            "am_peak": {
+              "n": 862,
+              "mae": 5.480056071152359,
+              "rmse": 7.433854050886659,
+              "p90_abs_error": 10.622499999999999
+            },
+            "midday": {
+              "n": 2241,
+              "mae": 5.488595121225643,
+              "rmse": 7.469079810231772,
+              "p90_abs_error": 11.1
+            },
+            "overnight": {
+              "n": 705,
+              "mae": 4.586725768321513,
+              "rmse": 6.037689373171087,
+              "p90_abs_error": 8.710000000000003
+            },
+            "pm_evening": {
+              "n": 3258,
+              "mae": 5.225936157151628,
+              "rmse": 6.904874134032745,
+              "p90_abs_error": 10.652500000000002
+            }
+          },
+          "by_trip_length_tercile": {
+            "long": {
+              "n": 2137,
+              "mae": 9.170706598034627,
+              "rmse": 10.932841875255928,
+              "p90_abs_error": 16.606666666666666
+            },
+            "medium": {
+              "n": 2282,
+              "mae": 1.7094033011977796,
+              "rmse": 2.1053890282137173,
+              "p90_abs_error": 3.366666666666667
+            },
+            "short": {
+              "n": 2647,
+              "mae": 5.2077194308021655,
+              "rmse": 5.7705420765977005,
+              "p90_abs_error": 8.506666666666668
+            }
+          }
+        }
+      },
+      "global_median": {
+        "val": {
+          "n": 5565,
+          "mae": 5.937112908056304,
+          "rmse": 8.073315148702331,
+          "p90_abs_error": 12.336666666666678,
+          "by_time_band": {
+            "am_peak": {
+              "n": 1007,
+              "mae": 6.1115524660708385,
+              "rmse": 8.278168619469865,
+              "p90_abs_error": 13.509999999999998
+            },
+            "midday": {
+              "n": 1492,
+              "mae": 6.69297363717605,
+              "rmse": 9.172338737871165,
+              "p90_abs_error": 14.313333333333338
+            },
+            "overnight": {
+              "n": 363,
+              "mae": 4.723507805325987,
+              "rmse": 5.661122983773127,
+              "p90_abs_error": 8.88
+            },
+            "pm_evening": {
+              "n": 2703,
+              "mae": 5.61788753237144,
+              "rmse": 7.610377595438177,
+              "p90_abs_error": 11.313333333333338
+            }
+          },
+          "by_trip_length_tercile": {
+            "long": {
+              "n": 1963,
+              "mae": 10.260383766344031,
+              "rmse": 12.227480563028017,
+              "p90_abs_error": 18.846666666666668
+            },
+            "medium": {
+              "n": 1775,
+              "mae": 1.4727230046948354,
+              "rmse": 1.7083908269267272,
+              "p90_abs_error": 2.6500000000000004
+            },
+            "short": {
+              "n": 1827,
+              "mae": 5.6293468345192474,
+              "rmse": 5.920784097884252,
+              "p90_abs_error": 8.3
+            }
+          }
+        },
+        "test": {
+          "n": 7066,
+          "mae": 5.460394848570619,
+          "rmse": 7.131599785454167,
+          "p90_abs_error": 10.391666666666667,
+          "by_time_band": {
+            "am_peak": {
+              "n": 862,
+              "mae": 5.624323279195668,
+              "rmse": 7.474694569474714,
+              "p90_abs_error": 10.196666666666665
+            },
+            "midday": {
+              "n": 2241,
+              "mae": 5.668131786404879,
+              "rmse": 7.511742976004813,
+              "p90_abs_error": 10.950000000000001
+            },
+            "overnight": {
+              "n": 705,
+              "mae": 4.832860520094563,
+              "rmse": 6.185346826688885,
+              "p90_abs_error": 9.040000000000003
+            },
+            "pm_evening": {
+              "n": 3258,
+              "mae": 5.409924288929814,
+              "rmse": 6.959285798322049,
+              "p90_abs_error": 10.438333333333338
+            }
+          },
+          "by_trip_length_tercile": {
+            "long": {
+              "n": 2137,
+              "mae": 9.238628919045391,
+              "rmse": 10.868959831217232,
+              "p90_abs_error": 16.46333333333334
+            },
+            "medium": {
+              "n": 2282,
+              "mae": 1.4906660823838738,
+              "rmse": 1.7260467870122473,
+              "p90_abs_error": 2.666666666666668
+            },
+            "short": {
+              "n": 2647,
+              "mae": 5.832451832262939,
+              "rmse": 6.150214970908689,
+              "p90_abs_error": 8.616666666666667
+            }
+          }
+        }
+      }
+    },
+    "rows": {
+      "train": 12943,
+      "val": 5565,
+      "test": 7066
+    }
+  },
+  "demand": {
+    "horizon": 1,
+    "params": {
+      "objective": "poisson",
+      "metric": "poisson",
+      "num_threads": 0,
+      "num_leaves": 15,
+      "learning_rate": 0.1,
+      "min_data_in_leaf": 20,
+      "seed": 42,
+      "verbosity": -1
+    },
+    "best_iteration": 60,
+    "features": [
+      "lag_1",
+      "lag_4",
+      "lag_96",
+      "lag_672",
+      "roll_mean_4",
+      "roll_mean_96",
+      "slot_of_day",
+      "dow",
+      "is_weekend",
+      "us_holiday",
+      "zone_mean_rate",
+      "zone"
+    ],
+    "val": {
+      "n": 19872,
+      "mae": 0.35931264725477374,
+      "rmse": 0.5346390590936975,
+      "p90_abs_error": 0.7651723777375858,
+      "wmape": 1.2830657549410358,
+      "poisson_deviance": 0.6692760643492845,
+      "pred_to_actual_total": 1.002768109095433,
+      "by_time_band": {
+        "am_peak": {
+          "n": 3312,
+          "mae": 0.39070751809873633,
+          "rmse": 0.5582538724737122,
+          "p90_abs_error": 0.7515890421622317,
+          "wmape": 1.2850281032204716,
+          "poisson_deviance": 0.7408313917623454,
+          "pred_to_actual_total": 0.9083280658296
+        },
+        "midday": {
+          "n": 4968,
+          "mae": 0.40914957435863425,
+          "rmse": 0.5420320496253651,
+          "p90_abs_error": 0.6835777921473365,
+          "wmape": 1.3623693601968465,
+          "poisson_deviance": 0.7381704298383116,
+          "pred_to_actual_total": 1.0633444957267992
+        },
+        "overnight": {
+          "n": 4968,
+          "mae": 0.14197620747132858,
+          "rmse": 0.28014664177035176,
+          "p90_abs_error": 0.21485451481245119,
+          "wmape": 1.9430793353100837,
+          "poisson_deviance": 0.34481911646336383,
+          "pred_to_actual_total": 1.2148276975273038
+        },
+        "pm_evening": {
+          "n": 6624,
+          "mae": 0.46923984634248095,
+          "rmse": 0.6499864726843354,
+          "p90_abs_error": 0.9119310354140285,
+          "wmape": 1.1499240629569345,
+          "poisson_deviance": 0.8251703374404242,
+          "pred_to_actual_total": 0.9760361535326977
+        }
+      },
+      "by_zone_volume_tier": {
+        "low": {
+          "n": 6624,
+          "mae": 0.14953988132835877,
+          "rmse": 0.2959157530402832,
+          "p90_abs_error": 0.24749411399901372,
+          "wmape": 1.7720074667603731,
+          "poisson_deviance": 0.35004080976814705,
+          "pred_to_actual_total": 1.081497041559988
+        },
+        "mid": {
+          "n": 6624,
+          "mae": 0.40705767651482455,
+          "rmse": 0.541444137106294,
+          "p90_abs_error": 0.6930173015172106,
+          "wmape": 1.4007013242775053,
+          "poisson_deviance": 0.7624547827879183,
+          "pred_to_actual_total": 0.9947130480419277
+        },
+        "high": {
+          "n": 6624,
+          "mae": 0.5213403839211379,
+          "rmse": 0.6904990108766305,
+          "p90_abs_error": 0.9684091921414056,
+          "wmape": 1.1208564437175002,
+          "poisson_deviance": 0.895332600491788,
+          "pred_to_actual_total": 0.993516735930977
+        }
+      }
+    },
+    "test": {
+      "n": 26496,
+      "mae": 0.353308828942632,
+      "rmse": 0.5237505536310829,
+      "p90_abs_error": 0.7464564888848826,
+      "wmape": 1.3248331066606251,
+      "poisson_deviance": 0.6638105215491006,
+      "pred_to_actual_total": 1.0274063270388747,
+      "by_time_band": {
+        "am_peak": {
+          "n": 4416,
+          "mae": 0.32220910703284644,
+          "rmse": 0.44787148957837947,
+          "p90_abs_error": 0.6583416547422782,
+          "wmape": 1.650667536725116,
+          "poisson_deviance": 0.6153489252611108,
+          "pred_to_actual_total": 1.2683849412596644
+        },
+        "midday": {
+          "n": 6624,
+          "mae": 0.4286080886496761,
+          "rmse": 0.57805240018597,
+          "p90_abs_error": 0.7281025372858022,
+          "wmape": 1.2668897720729382,
+          "poisson_deviance": 0.7830841951860483,
+          "pred_to_actual_total": 0.9255453840408383
+        },
+        "overnight": {
+          "n": 6624,
+          "mae": 0.17676147057987435,
+          "rmse": 0.3365846732196369,
+          "p90_abs_error": 0.4382562322722034,
+          "wmape": 1.6608056469802663,
+          "poisson_deviance": 0.4012023921629797,
+          "pred_to_actual_total": 1.137663496748522
+        },
+        "pm_evening": {
+          "n": 8832,
+          "mae": 0.44479476388930983,
+          "rmse": 0.6221528164307154,
+          "p90_abs_error": 0.8483265804360395,
+          "wmape": 1.2057788074494735,
+          "poisson_deviance": 0.7955421615049753,
+          "pred_to_actual_total": 1.0098543022245643
+        }
+      },
+      "by_zone_volume_tier": {
+        "low": {
+          "n": 8832,
+          "mae": 0.15052929830985984,
+          "rmse": 0.2962030533814808,
+          "p90_abs_error": 0.2431688885018191,
+          "wmape": 1.7749996831410977,
+          "poisson_deviance": 0.3530810790946643,
+          "pred_to_actual_total": 1.0815698453035274
+        },
+        "mid": {
+          "n": 8832,
+          "mae": 0.40190710385763945,
+          "rmse": 0.5336808157223045,
+          "p90_abs_error": 0.7036296428842872,
+          "wmape": 1.4365210608137076,
+          "poisson_deviance": 0.7629882714185795,
+          "pred_to_actual_total": 1.014674127095985
+        },
+        "high": {
+          "n": 8832,
+          "mae": 0.5074900846603967,
+          "rmse": 0.6711128559222069,
+          "p90_abs_error": 0.9152277783294742,
+          "wmape": 1.1654062474572604,
+          "poisson_deviance": 0.8753622141340577,
+          "pred_to_actual_total": 1.0250383579485614
+        }
+      }
+    },
+    "baselines": {
+      "same_slot_last_week": {
+        "val": {
+          "n": 19872,
+          "mae": 0.386725040257649,
+          "rmse": 0.7507712084299767,
+          "p90_abs_error": 1.0,
+          "wmape": 1.380952380952381,
+          "poisson_deviance": 4.947076995966373,
+          "pred_to_actual_total": 1.006648697214735,
+          "by_time_band": {
+            "am_peak": {
+              "n": 3312,
+              "mae": 0.4290458937198068,
+              "rmse": 0.7757262453530037,
+              "p90_abs_error": 1.0,
+              "wmape": 1.4111221449851044,
+              "poisson_deviance": 5.658329541825034,
+              "pred_to_actual_total": 0.9910625620655412
+            },
+            "midday": {
+              "n": 4968,
+              "mae": 0.4329710144927536,
+              "rmse": 0.7779934138621499,
+              "p90_abs_error": 1.0,
+              "wmape": 1.4416890080428955,
+              "poisson_deviance": 5.757915536563183,
+              "pred_to_actual_total": 0.9939678284182306
+            },
+            "overnight": {
+              "n": 4968,
+              "mae": 0.12278582930756844,
+              "rmse": 0.375368847051209,
+              "p90_abs_error": 1.0,
+              "wmape": 1.6804407713498624,
+              "poisson_deviance": 1.6744229568711528,
+              "pred_to_actual_total": 0.9724517906336089
+            },
+            "pm_evening": {
+              "n": 6624,
+              "mae": 0.5288345410628019,
+              "rmse": 0.9112985108324334,
+              "p90_abs_error": 2.0,
+              "wmape": 1.295967443581206,
+              "poisson_deviance": 6.4378123469108495,
+              "pred_to_actual_total": 1.024047354790973
+            }
+          },
+          "by_zone_volume_tier": {
+            "low": {
+              "n": 6624,
+              "mae": 0.1403985507246377,
+              "rmse": 0.4100930729754106,
+              "p90_abs_error": 1.0,
+              "wmape": 1.663685152057245,
+              "poisson_deviance": 1.9484491975525284,
+              "pred_to_actual_total": 0.9713774597495528
+            },
+            "mid": {
+              "n": 6624,
+              "mae": 0.42995169082125606,
+              "rmse": 0.7710413937771917,
+              "p90_abs_error": 1.0,
+              "wmape": 1.4794805194805194,
+              "poisson_deviance": 5.721078972832275,
+              "pred_to_actual_total": 1.0083116883116883
+            },
+            "high": {
+              "n": 6624,
+              "mae": 0.5898248792270532,
+              "rmse": 0.9634786260223589,
+              "p90_abs_error": 2.0,
+              "wmape": 1.2680947744238884,
+              "poisson_deviance": 7.1717028175143165,
+              "pred_to_actual_total": 1.0120090879584551
+            }
+          }
+        },
+        "test": {
+          "n": 26496,
+          "mae": 0.3757925724637681,
+          "rmse": 0.7436577653603009,
+          "p90_abs_error": 1.0,
+          "wmape": 1.4091423719218794,
+          "poisson_deviance": 4.698373381051442,
+          "pred_to_actual_total": 1.0389187659213133,
+          "by_time_band": {
+            "am_peak": {
+              "n": 4416,
+              "mae": 0.3172554347826087,
+              "rmse": 0.6498676007855174,
+              "p90_abs_error": 1.0,
+              "wmape": 1.6252900232018561,
+              "poisson_deviance": 3.681645864633128,
+              "pred_to_actual_total": 1.228538283062645
+            },
+            "midday": {
+              "n": 6624,
+              "mae": 0.4542572463768116,
+              "rmse": 0.7990218960317447,
+              "p90_abs_error": 1.0,
+              "wmape": 1.3427041499330656,
+              "poisson_deviance": 6.283911089768584,
+              "pred_to_actual_total": 0.9049531459170014
+            },
+            "overnight": {
+              "n": 6624,
+              "mae": 0.1751207729468599,
+              "rmse": 0.4852908884131368,
+              "p90_abs_error": 1.0,
+              "wmape": 1.6453900709219857,
+              "poisson_deviance": 2.170752841387338,
+              "pred_to_actual_total": 1.1219858156028368
+            },
+            "pm_evening": {
+              "n": 8832,
+              "mae": 0.4967164855072464,
+              "rmse": 0.8902017968586868,
+              "p90_abs_error": 1.0,
+              "wmape": 1.3465316144874155,
+              "poisson_deviance": 5.91329926247082,
+              "pred_to_actual_total": 1.0629220380601596
+            }
+          },
+          "by_zone_volume_tier": {
+            "low": {
+              "n": 8832,
+              "mae": 0.13892663043478262,
+              "rmse": 0.4061628947866229,
+              "p90_abs_error": 1.0,
+              "wmape": 1.6381842456608813,
+              "poisson_deviance": 2.0245195828123603,
+              "pred_to_actual_total": 0.8758344459279038
+            },
+            "mid": {
+              "n": 8832,
+              "mae": 0.40998641304347827,
+              "rmse": 0.7429469083963216,
+              "p90_abs_error": 1.0,
+              "wmape": 1.4653986240388506,
+              "poisson_deviance": 5.459781426120091,
+              "pred_to_actual_total": 0.9923108053419668
+            },
+            "high": {
+              "n": 8832,
+              "mae": 0.5784646739130435,
+              "rmse": 0.9706401033055081,
+              "p90_abs_error": 2.0,
+              "wmape": 1.328393135725429,
+              "poisson_deviance": 6.610819134221875,
+              "pred_to_actual_total": 1.1006240249609984
+            }
+          }
+        }
+      },
+      "same_slot_yesterday": {
+        "val": {
+          "n": 19872,
+          "mae": 0.38118961352657005,
+          "rmse": 0.7426166363602649,
+          "p90_abs_error": 1.0,
+          "wmape": 1.3611859838274933,
+          "poisson_deviance": 4.895741645818921,
+          "pred_to_actual_total": 0.9840071877807727,
+          "by_time_band": {
+            "am_peak": {
+              "n": 3312,
+              "mae": 0.447463768115942,
+              "rmse": 0.8023215108441784,
+              "p90_abs_error": 1.0,
+              "wmape": 1.471698113207547,
+              "poisson_deviance": 5.4190831115703695,
+              "pred_to_actual_total": 1.0814299900695135
+            },
+            "midday": {
+              "n": 4968,
+              "mae": 0.41606280193236717,
+              "rmse": 0.7530132704722051,
+              "p90_abs_error": 1.0,
+              "wmape": 1.3853887399463807,
+              "poisson_deviance": 5.433409564031004,
+              "pred_to_actual_total": 0.9993297587131368
+            },
+            "overnight": {
+              "n": 4968,
+              "mae": 0.1181561996779388,
+              "rmse": 0.3740258415039279,
+              "p90_abs_error": 1.0,
+              "wmape": 1.6170798898071626,
+              "poisson_deviance": 1.6882800206051372,
+              "pred_to_actual_total": 0.9035812672176309
+            },
+            "pm_evening": {
+              "n": 6624,
+              "mae": 0.5191727053140096,
+              "rmse": 0.8957596026281176,
+              "p90_abs_error": 1.0,
+              "wmape": 1.2722900480947097,
+              "poisson_deviance": 6.63641619319447,
+              "pred_to_actual_total": 0.9500554938956715
+            }
+          },
+          "by_zone_volume_tier": {
+            "low": {
+              "n": 6624,
+              "mae": 0.13541666666666666,
+              "rmse": 0.4047200380247363,
+              "p90_abs_error": 1.0,
+              "wmape": 1.6046511627906976,
+              "poisson_deviance": 1.9304148979134592,
+              "pred_to_actual_total": 0.9159212880143113
+            },
+            "mid": {
+              "n": 6624,
+              "mae": 0.42617753623188404,
+              "rmse": 0.7591033676024064,
+              "p90_abs_error": 1.0,
+              "wmape": 1.4664935064935065,
+              "poisson_deviance": 5.81766291936632,
+              "pred_to_actual_total": 0.9558441558441558
+            },
+            "high": {
+              "n": 6624,
+              "mae": 0.5819746376811594,
+              "rmse": 0.9562437837251772,
+              "p90_abs_error": 2.0,
+              "wmape": 1.2512171372930867,
+              "poisson_deviance": 6.9391471201769805,
+              "pred_to_actual_total": 1.0139565076273938
+            }
+          }
+        },
+        "test": {
+          "n": 26496,
+          "mae": 0.37771739130434784,
+          "rmse": 0.7358262141234874,
+          "p90_abs_error": 1.0,
+          "wmape": 1.4163600339654685,
+          "poisson_deviance": 4.893391430317627,
+          "pred_to_actual_total": 0.9974525898669686,
+          "by_time_band": {
+            "am_peak": {
+              "n": 4416,
+              "mae": 0.29461050724637683,
+              "rmse": 0.615875422656144,
+              "p90_abs_error": 1.0,
+              "wmape": 1.5092807424593968,
+              "poisson_deviance": 4.308294447452427,
+              "pred_to_actual_total": 0.8665893271461717
+            },
+            "midday": {
+              "n": 6624,
+              "mae": 0.46210748792270534,
+              "rmse": 0.7986439291723595,
+              "p90_abs_error": 1.0,
+              "wmape": 1.3659080767514502,
+              "poisson_deviance": 6.022079755182825,
+              "pred_to_actual_total": 0.9825970548862115
+            },
+            "overnight": {
+              "n": 6624,
+              "mae": 0.1802536231884058,
+              "rmse": 0.4893182677458082,
+              "p90_abs_error": 1.0,
+              "wmape": 1.6936170212765957,
+              "poisson_deviance": 2.2730035631445213,
+              "pred_to_actual_total": 1.099290780141844
+            },
+            "pm_evening": {
+              "n": 8832,
+              "mae": 0.5040760869565217,
+              "rmse": 0.8813177715743361,
+              "p90_abs_error": 1.0,
+              "wmape": 1.3664825046040516,
+              "poisson_deviance": 6.304714578481156,
+              "pred_to_actual_total": 1.0202578268876612
+            }
+          },
+          "by_zone_volume_tier": {
+            "low": {
+              "n": 8832,
+              "mae": 0.14504076086956522,
+              "rmse": 0.4177070344950713,
+              "p90_abs_error": 1.0,
+              "wmape": 1.7102803738317758,
+              "poisson_deviance": 1.9755989532942007,
+              "pred_to_actual_total": 1.0173564753004005
+            },
+            "mid": {
+              "n": 8832,
+              "mae": 0.4214221014492754,
+              "rmse": 0.7536144787679545,
+              "p90_abs_error": 1.0,
+              "wmape": 1.5062727640631324,
+              "poisson_deviance": 5.688165296835369,
+              "pred_to_actual_total": 0.9886685552407932
+            },
+            "high": {
+              "n": 8832,
+              "mae": 0.5666893115942029,
+              "rmse": 0.9390988781265531,
+              "p90_abs_error": 2.0,
+              "wmape": 1.3013520540821633,
+              "poisson_deviance": 7.0164100408233105,
+              "pred_to_actual_total": 0.999219968798752
+            }
+          }
+        }
+      }
+    },
+    "rows": {
+      "train": 46368,
+      "val": 19872,
+      "test": 26496
+    }
+  },
+  "travel_fallback_coverage": {
+    "overnight": {
+      "pair_band": 0.002520478890989288,
+      "pair_all_day": 0.2066792690611216,
+      "pickup_zone": 0.7038437303087587,
+      "haversine": 0.08695652173913043
+    },
+    "am_peak": {
+      "pair_band": 0.012392354547364,
+      "pair_all_day": 0.1968073934047469,
+      "pickup_zone": 0.7038437303087587,
+      "haversine": 0.08695652173913043
+    },
+    "midday": {
+      "pair_band": 0.027095148078134845,
+      "pair_all_day": 0.18210459987397606,
+      "pickup_zone": 0.7038437303087587,
+      "haversine": 0.08695652173913043
+    },
+    "pm_evening": {
+      "pair_band": 0.08485612266330603,
+      "pair_all_day": 0.12434362528880487,
+      "pickup_zone": 0.7038437303087587,
+      "haversine": 0.08695652173913043
+    }
+  },
+  "travel_median_speed_mph": 9.38293936279548,
+  "limitations": [
+    "No refit on train+val: reported test numbers come from a model trained on Jan 8 - Feb 28.",
+    "Demand counts only servable (intra-geofence) requests; out-of-geofence demand is invisible.",
+    "Waits are Uber-only and completed-trips-only (Lyft on_scene starts 2025-03-06).",
+    "Travel bands ignore weekday/weekend; fallback cells use haversine x citywide median speed.",
+    "ETA route medians are fit on the same sampled train rows the model trains on (min count 20).",
+    "Naive local timestamps: the 2025-03-09 DST gap is NULL and excluded; no fall-back in window.",
+    "Test window ends 30 min before May 1: later requests are right-censored in the April file.",
+    "ETA trip_miles ablation uses a post-trip quantity and is an upper bound, not deployable."
+  ]
+}
