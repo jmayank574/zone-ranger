@@ -1,0 +1,702 @@
+{
+  "files": [
+    "fhvhv_tripdata_2025-01.parquet"
+  ],
+  "license_breakdown": [
+    {
+      "license": "HV0003",
+      "rows": 15356455,
+      "share": 0.7525583826,
+      "on_scene_null_rate": 0.0,
+      "request_null_rate": 0.0,
+      "shared_match_share": 0.0307317021,
+      "wav_request_share": 0.0024142291,
+      "access_a_ride_share": 0.0009436423
+    },
+    {
+      "license": "HV0005",
+      "rows": 5049211,
+      "share": 0.2474416174,
+      "on_scene_null_rate": 0.9972122377,
+      "request_null_rate": 0.0,
+      "shared_match_share": 8.39735e-05,
+      "wav_request_share": 0.0027877623,
+      "access_a_ride_share": 0.0011841454
+    }
+  ],
+  "null_rates_raw": {
+    "hvfhs_license_num": 0.0,
+    "request_datetime": 0.0,
+    "on_scene_datetime": 0.246751809,
+    "pickup_datetime": 0.0,
+    "dropoff_datetime": 0.0,
+    "pu": 0.0,
+    "do_": 0.0,
+    "trip_miles": 0.0,
+    "trip_time": 0.0,
+    "fare": 0.0,
+    "driver_pay": 0.0,
+    "shared_request_flag": 0.0,
+    "shared_match_flag": 0.0,
+    "wav_request_flag": 0.0,
+    "access_a_ride_flag": 0.0,
+    "wait_min": 0.246751809,
+    "pickup_delay_min": 0.0
+  },
+  "distributions_clean": {
+    "wait_min_on_scene_minus_request": {
+      "n": 14552489,
+      "mean": 3.5411241243105622,
+      "min": 0.0,
+      "p10": 0.9360124251072793,
+      "p25": 1.6468514577808426,
+      "p50": 2.771427458994387,
+      "p75": 4.501795038354903,
+      "p90": 7.003552489355082,
+      "p99": 14.633804072473886,
+      "max": 141.66666666666666
+    },
+    "pickup_delay_min_pickup_minus_request": {
+      "n": 19327879,
+      "mean": 4.544545009310188,
+      "min": 0.0,
+      "p10": 1.9135689698740448,
+      "p25": 2.7004689540998337,
+      "p50": 3.843338547013644,
+      "p75": 5.528425013026715,
+      "p90": 7.935010164664762,
+      "p99": 15.284402259890223,
+      "max": 141.66666666666666
+    },
+    "trip_time_min": {
+      "n": 19327879,
+      "mean": 17.419582321991918,
+      "min": 1.0,
+      "p10": 6.120666884626004,
+      "p25": 9.165767328394768,
+      "p50": 14.579657791528005,
+      "p75": 22.60441032361532,
+      "p90": 32.46583044539549,
+      "p99": 56.55225677170293,
+      "max": 179.86666666666667
+    },
+    "trip_miles": {
+      "n": 19327879,
+      "mean": 4.301986628175803,
+      "min": 0.1,
+      "p10": 0.920030577209598,
+      "p25": 1.4335372366348493,
+      "p50": 2.672431217139255,
+      "p75": 5.5218141188776055,
+      "p90": 10.027013828028597,
+      "p99": 19.954436923357306,
+      "max": 98.56
+    },
+    "base_passenger_fare": {
+      "n": 19327879,
+      "mean": 22.400017761904902,
+      "min": 0.01,
+      "p10": 8.886654972690005,
+      "p25": 11.499677823250558,
+      "p50": 17.426476466734705,
+      "p75": 27.416273391917258,
+      "p90": 42.07893689050305,
+      "p99": 85.77194961208139,
+      "max": 468.31
+    },
+    "pickup_delay_min_uber_only": {
+      "n": 14543999,
+      "mean": 4.502962657198533,
+      "min": 0.016666666666666666,
+      "p10": 1.885813504989546,
+      "p25": 2.659688449917485,
+      "p50": 3.7729891324070457,
+      "p75": 5.453096568964086,
+      "p90": 7.913755197978072,
+      "p99": 15.554115450733445,
+      "max": 141.66666666666666
+    }
+  },
+  "demand_profile": {
+    "by_hour_of_day": [
+      {
+        "hour": 0,
+        "requests": 632137,
+        "per_day": 20391.5161290323
+      },
+      {
+        "hour": 1,
+        "requests": 440695,
+        "per_day": 14215.9677419355
+      },
+      {
+        "hour": 2,
+        "requests": 324578,
+        "per_day": 10470.2580645161
+      },
+      {
+        "hour": 3,
+        "requests": 268543,
+        "per_day": 8662.6774193548
+      },
+      {
+        "hour": 4,
+        "requests": 268467,
+        "per_day": 8660.2258064516
+      },
+      {
+        "hour": 5,
+        "requests": 337672,
+        "per_day": 10892.6451612903
+      },
+      {
+        "hour": 6,
+        "requests": 563951,
+        "per_day": 18191.9677419355
+      },
+      {
+        "hour": 7,
+        "requests": 876195,
+        "per_day": 28264.3548387097
+      },
+      {
+        "hour": 8,
+        "requests": 1015168,
+        "per_day": 32747.3548387097
+      },
+      {
+        "hour": 9,
+        "requests": 907602,
+        "per_day": 29277.4838709677
+      },
+      {
+        "hour": 10,
+        "requests": 830397,
+        "per_day": 26787.0
+      },
+      {
+        "hour": 11,
+        "requests": 818242,
+        "per_day": 26394.9032258065
+      },
+      {
+        "hour": 12,
+        "requests": 836708,
+        "per_day": 26990.5806451613
+      },
+      {
+        "hour": 13,
+        "requests": 884793,
+        "per_day": 28541.7096774194
+      },
+      {
+        "hour": 14,
+        "requests": 977922,
+        "per_day": 31545.8709677419
+      },
+      {
+        "hour": 15,
+        "requests": 990382,
+        "per_day": 31947.8064516129
+      },
+      {
+        "hour": 16,
+        "requests": 1040606,
+        "per_day": 33567.935483871
+      },
+      {
+        "hour": 17,
+        "requests": 1186863,
+        "per_day": 38285.9032258065
+      },
+      {
+        "hour": 18,
+        "requests": 1204566,
+        "per_day": 38856.9677419355
+      },
+      {
+        "hour": 19,
+        "requests": 1129724,
+        "per_day": 36442.7096774194
+      },
+      {
+        "hour": 20,
+        "requests": 1026475,
+        "per_day": 33112.0967741935
+      },
+      {
+        "hour": 21,
+        "requests": 990796,
+        "per_day": 31961.1612903226
+      },
+      {
+        "hour": 22,
+        "requests": 947742,
+        "per_day": 30572.3225806452
+      },
+      {
+        "hour": 23,
+        "requests": 827655,
+        "per_day": 25864.21875
+      }
+    ],
+    "by_day_of_week": [
+      {
+        "iso_dow": 1,
+        "requests": 2154321
+      },
+      {
+        "iso_dow": 2,
+        "requests": 2338062
+      },
+      {
+        "iso_dow": 3,
+        "requests": 3083109
+      },
+      {
+        "iso_dow": 4,
+        "requests": 3102924
+      },
+      {
+        "iso_dow": 5,
+        "requests": 3398374
+      },
+      {
+        "iso_dow": 6,
+        "requests": 2843848
+      },
+      {
+        "iso_dow": 7,
+        "requests": 2407241
+      }
+    ],
+    "top_pickup_zones": [
+      {
+        "location_id": 138,
+        "zone": "LaGuardia Airport",
+        "borough": "Queens",
+        "requests": 314536
+      },
+      {
+        "location_id": 132,
+        "zone": "JFK Airport",
+        "borough": "Queens",
+        "requests": 293524
+      },
+      {
+        "location_id": 61,
+        "zone": "Crown Heights North",
+        "borough": "Brooklyn",
+        "requests": 259778
+      },
+      {
+        "location_id": 79,
+        "zone": "East Village",
+        "borough": "Manhattan",
+        "requests": 244406
+      },
+      {
+        "location_id": 230,
+        "zone": "Times Sq/Theatre District",
+        "borough": "Manhattan",
+        "requests": 218865
+      },
+      {
+        "location_id": 161,
+        "zone": "Midtown Center",
+        "borough": "Manhattan",
+        "requests": 217684
+      },
+      {
+        "location_id": 231,
+        "zone": "TriBeCa/Civic Center",
+        "borough": "Manhattan",
+        "requests": 217236
+      },
+      {
+        "location_id": 37,
+        "zone": "Bushwick South",
+        "borough": "Brooklyn",
+        "requests": 213736
+      },
+      {
+        "location_id": 76,
+        "zone": "East New York",
+        "borough": "Brooklyn",
+        "requests": 213575
+      },
+      {
+        "location_id": 234,
+        "zone": "Union Sq",
+        "borough": "Manhattan",
+        "requests": 207642
+      },
+      {
+        "location_id": 181,
+        "zone": "Park Slope",
+        "borough": "Brooklyn",
+        "requests": 201619
+      },
+      {
+        "location_id": 68,
+        "zone": "East Chelsea",
+        "borough": "Manhattan",
+        "requests": 198940
+      },
+      {
+        "location_id": 246,
+        "zone": "West Chelsea/Hudson Yards",
+        "borough": "Manhattan",
+        "requests": 198754
+      },
+      {
+        "location_id": 255,
+        "zone": "Williamsburg (North Side)",
+        "borough": "Brooklyn",
+        "requests": 191313
+      },
+      {
+        "location_id": 7,
+        "zone": "Astoria",
+        "borough": "Queens",
+        "requests": 189389
+      }
+    ],
+    "by_borough": [
+      {
+        "borough": "Manhattan",
+        "requests": 7316338,
+        "share": 0.3785380693
+      },
+      {
+        "borough": "Brooklyn",
+        "requests": 5339383,
+        "share": 0.2762529194
+      },
+      {
+        "borough": "Queens",
+        "requests": 3954250,
+        "share": 0.2045878909
+      },
+      {
+        "borough": "Bronx",
+        "requests": 2421533,
+        "share": 0.125287053
+      },
+      {
+        "borough": "Staten Island",
+        "requests": 296374,
+        "share": 0.0153340157
+      },
+      {
+        "borough": "EWR",
+        "requests": 1,
+        "share": 5.17e-08
+      }
+    ]
+  },
+  "geofence_options": [
+    {
+      "name": "manhattan",
+      "n_zones": 69,
+      "zone_ids": [
+        4,
+        12,
+        13,
+        24,
+        41,
+        42,
+        43,
+        45,
+        48,
+        50,
+        68,
+        74,
+        75,
+        79,
+        87,
+        88,
+        90,
+        100,
+        103,
+        104,
+        105,
+        107,
+        113,
+        114,
+        116,
+        120,
+        125,
+        127,
+        128,
+        137,
+        140,
+        141,
+        142,
+        143,
+        144,
+        148,
+        151,
+        152,
+        153,
+        158,
+        161,
+        162,
+        163,
+        164,
+        166,
+        170,
+        186,
+        194,
+        202,
+        209,
+        211,
+        224,
+        229,
+        230,
+        231,
+        232,
+        233,
+        234,
+        236,
+        237,
+        238,
+        239,
+        243,
+        244,
+        246,
+        249,
+        261,
+        262,
+        263
+      ],
+      "pickups_per_day": 228635.5625,
+      "intra_geofence_share": 0.7480719179458357,
+      "intra_mean_trip_min": 14.294415214866328,
+      "intra_mean_trip_miles": 2.5615422364866216,
+      "intra_mean_pickup_delay_min": 4.015021062531875,
+      "little_law_fleet_sizing": {
+        "sample_5%": {
+          "peak_requests_per_hour": 802.2625,
+          "mean_requests_per_hour": 366.6890327380952,
+          "fleet_for_peak_at_target_util": 318.55203573101943,
+          "fleet_for_mean_at_target_util": 145.60014690822348
+        },
+        "sample_10%": {
+          "peak_requests_per_hour": 1604.525,
+          "mean_requests_per_hour": 733.3780654761904,
+          "fleet_for_peak_at_target_util": 637.1040714620389,
+          "fleet_for_mean_at_target_util": 291.20029381644696
+        }
+      },
+      "target_utilization": 0.6
+    },
+    {
+      "name": "manhattan_below_96th",
+      "n_zones": 52,
+      "zone_ids": [
+        4,
+        12,
+        13,
+        43,
+        45,
+        48,
+        50,
+        68,
+        79,
+        87,
+        88,
+        90,
+        100,
+        103,
+        104,
+        105,
+        107,
+        113,
+        114,
+        125,
+        137,
+        140,
+        141,
+        142,
+        143,
+        144,
+        148,
+        158,
+        161,
+        162,
+        163,
+        164,
+        170,
+        186,
+        202,
+        209,
+        211,
+        224,
+        229,
+        230,
+        231,
+        232,
+        233,
+        234,
+        236,
+        237,
+        239,
+        246,
+        249,
+        261,
+        262,
+        263
+      ],
+      "pickups_per_day": 187052.1875,
+      "intra_geofence_share": 0.7083791789390327,
+      "intra_mean_trip_min": 13.943263766185455,
+      "intra_mean_trip_miles": 2.2405143182133305,
+      "intra_mean_pickup_delay_min": 3.950607301421668,
+      "little_law_fleet_sizing": {
+        "sample_5%": {
+          "peak_requests_per_hour": 673.3625000000001,
+          "mean_requests_per_hour": 284.10962797619044,
+          "fleet_for_peak_at_target_util": 260.80197077105703,
+          "fleet_for_mean_at_target_util": 110.03931892735682
+        },
+        "sample_10%": {
+          "peak_requests_per_hour": 1346.7250000000001,
+          "mean_requests_per_hour": 568.2192559523809,
+          "fleet_for_peak_at_target_util": 521.6039415421141,
+          "fleet_for_mean_at_target_util": 220.07863785471363
+        }
+      },
+      "target_utilization": 0.6
+    },
+    {
+      "name": "manhattan_plus_inner_bk_qns_4km",
+      "n_zones": 97,
+      "zone_ids": [
+        4,
+        7,
+        8,
+        12,
+        13,
+        17,
+        24,
+        25,
+        33,
+        34,
+        40,
+        41,
+        42,
+        43,
+        45,
+        48,
+        49,
+        50,
+        52,
+        54,
+        65,
+        66,
+        68,
+        74,
+        75,
+        79,
+        80,
+        87,
+        88,
+        90,
+        97,
+        100,
+        103,
+        104,
+        105,
+        106,
+        107,
+        112,
+        113,
+        114,
+        116,
+        120,
+        125,
+        127,
+        128,
+        137,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        148,
+        151,
+        152,
+        153,
+        158,
+        161,
+        162,
+        163,
+        164,
+        166,
+        170,
+        179,
+        181,
+        186,
+        193,
+        194,
+        195,
+        202,
+        207,
+        209,
+        211,
+        217,
+        223,
+        224,
+        226,
+        229,
+        230,
+        231,
+        232,
+        233,
+        234,
+        236,
+        237,
+        238,
+        239,
+        243,
+        244,
+        246,
+        249,
+        255,
+        256,
+        261,
+        262,
+        263
+      ],
+      "pickups_per_day": 310430.46875,
+      "intra_geofence_share": 0.7857499289041678,
+      "intra_mean_trip_min": 15.104827334820923,
+      "intra_mean_trip_miles": 2.8805714829472637,
+      "intra_mean_pickup_delay_min": 4.076028859530792,
+      "little_law_fleet_sizing": {
+        "sample_5%": {
+          "peak_requests_per_hour": 1143.5875,
+          "mean_requests_per_hour": 523.4701785714286,
+          "fleet_for_peak_at_target_util": 479.8247702710979,
+          "fleet_for_mean_at_target_util": 219.63685172914737
+        },
+        "sample_10%": {
+          "peak_requests_per_hour": 2287.175,
+          "mean_requests_per_hour": 1046.9403571428572,
+          "fleet_for_peak_at_target_util": 959.6495405421958,
+          "fleet_for_mean_at_target_util": 439.27370345829473
+        }
+      },
+      "target_utilization": 0.6
+    }
+  ],
+  "license_names": {
+    "HV0002": "Juno",
+    "HV0003": "Uber",
+    "HV0004": "Via",
+    "HV0005": "Lyft"
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "raw_rows": 20405666,
+  "clean_rows": 19327879,
+  "dropped_total": 1077787,
+  "dropped_share": 0.0528180261305855,
+  "per_rule_independent_drops": {
+    "valid_zones": 815783,
+    "trip_time_1_to_180_min": 1846,
+    "trip_miles_0.1_to_100": 7476,
+    "base_fare_0_to_500": 17469,
+    "pickup_in_file_month": 0,
+    "request_not_after_pickup": 199788,
+    "pickup_delay_le_3h": 0,
+    "on_scene_not_before_request": 184438,
+    "dropoff_after_pickup": 4
+  },
+  "sequential_waterfall": [
+    {
+      "rule": "valid_zones",
+      "dropped_here": 815783,
+      "remaining": 19589883
+    },
+    {
+      "rule": "trip_time_1_to_180_min",
+      "dropped_here": 1584,
+      "remaining": 19588299
+    },
+    {
+      "rule": "trip_miles_0.1_to_100",
+      "dropped_here": 5344,
+      "remaining": 19582955
+    },
+    {
+      "rule": "base_fare_0_to_500",
+      "dropped_here": 16262,
+      "remaining": 19566693
+    },
+    {
+      "rule": "pickup_in_file_month",
+      "dropped_here": 0,
+      "remaining": 19566693
+    },
+    {
+      "rule": "request_not_after_pickup",
+      "dropped_here": 186636,
+      "remaining": 19380057
+    },
+    {
+      "rule": "pickup_delay_le_3h",
+      "dropped_here": 0,
+      "remaining": 19380057
+    },
+    {
+      "rule": "on_scene_not_before_request",
+      "dropped_here": 52178,
+      "remaining": 19327879
+    },
+    {
+      "rule": "dropoff_after_pickup",
+      "dropped_here": 0,
+      "remaining": 19327879
+    }
+  ],
+  "note": "Rules are proposals; independent drops overlap, waterfall drops sum to total."
+}
