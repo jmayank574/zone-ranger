@@ -52,3 +52,6 @@ addopts = "-q"
 
 [tool.ruff.lint.per-file-ignores]
 "src/fleetopt/eda.py" = ["E501"]  # long SQL strings
+
+[tool.coverage.run]
+omit = ["src/fleetopt/stubs.py"]

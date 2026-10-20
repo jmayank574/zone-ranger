@@ -1,65 +1,61 @@
 {
-  "raw_rows": 20405666,
-  "clean_rows": 19327879,
-  "dropped_total": 1077787,
-  "dropped_share": 0.0528180261305855,
+  "raw_rows": 80035989,
+  "clean_rows": 76509743,
+  "dropped_total": 3526246,
+  "dropped_share": 0.04405825484333054,
   "per_rule_independent_drops": {
-    "valid_zones": 815783,
-    "trip_time_1_to_180_min": 1846,
-    "trip_miles_0.1_to_100": 7476,
-    "base_fare_0_to_500": 17469,
+    "valid_zones": 3405635,
+    "trip_time_1_to_180_min": 7779,
+    "trip_miles_0.1_to_100": 31071,
+    "base_fare_0_to_500": 98570,
+    "request_present": 0,
     "pickup_in_file_month": 0,
-    "request_not_after_pickup": 199788,
-    "pickup_delay_le_3h": 0,
-    "on_scene_not_before_request": 184438,
-    "dropoff_after_pickup": 4
+    "dropoff_after_pickup": 15
   },
   "sequential_waterfall": [
     {
       "rule": "valid_zones",
-      "dropped_here": 815783,
-      "remaining": 19589883
+      "dropped_here": 3405635,
+      "remaining": 76630354
     },
     {
       "rule": "trip_time_1_to_180_min",
-      "dropped_here": 1584,
-      "remaining": 19588299
+      "dropped_here": 6589,
+      "remaining": 76623765
     },
     {
       "rule": "trip_miles_0.1_to_100",
-      "dropped_here": 5344,
-      "remaining": 19582955
+      "dropped_here": 22395,
+      "remaining": 76601370
     },
     {
       "rule": "base_fare_0_to_500",
-      "dropped_here": 16262,
-      "remaining": 19566693
+      "dropped_here": 91627,
+      "remaining": 76509743
+    },
+    {
+      "rule": "request_present",
+      "dropped_here": 0,
+      "remaining": 76509743
     },
     {
       "rule": "pickup_in_file_month",
       "dropped_here": 0,
-      "remaining": 19566693
-    },
-    {
-      "rule": "request_not_after_pickup",
-      "dropped_here": 186636,
-      "remaining": 19380057
-    },
-    {
-      "rule": "pickup_delay_le_3h",
-      "dropped_here": 0,
-      "remaining": 19380057
-    },
-    {
-      "rule": "on_scene_not_before_request",
-      "dropped_here": 52178,
-      "remaining": 19327879
+      "remaining": 76509743
     },
     {
       "rule": "dropoff_after_pickup",
       "dropped_here": 0,
-      "remaining": 19327879
+      "remaining": 76509743
     }
   ],
-  "note": "Rules are proposals; independent drops overlap, waterfall drops sum to total."
+  "wait_fields_nulled": {
+    "rows": 76509743,
+    "wait_invalid": 987340,
+    "request_after_pickup": 763246,
+    "on_scene_before_request": 830088,
+    "pickup_delay_gt_3h": 3,
+    "wait_invalid_share": 0.01290476168505755
+  },
+  "note": "Independent drops overlap; waterfall drops sum to total. Wait anomalies keep the row but null wait fields (wait_invalid=true)."
 }

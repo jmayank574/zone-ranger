@@ -7,6 +7,8 @@ DATA_DIR = ROOT / "data"
 RAW_DIR = DATA_DIR / "raw"
 REPORTS_DIR = ROOT / "reports"
 ARTIFACTS_DIR = ROOT / "artifacts"
+DUCKDB_PATH = DATA_DIR / "fleetopt.duckdb"  # persistent DB used from Phase 1
+DUCKDB_TMP_DIR = DATA_DIR / "duckdb_tmp"  # spill directory; keeps DuckDB off the C: drive
 
 TLC_TRIP_URL = "https://d37ci6vzurychx.cloudfront.net/trip-data"
 TLC_MISC_URL = "https://d37ci6vzurychx.cloudfront.net/misc"
@@ -29,3 +31,4 @@ SEED = 42
 # (see zones.manhattan_zone_ids). Override with an explicit list of LocationIDs.
 GEOFENCE_BOROUGHS = ("Manhattan",)
 DEMAND_SAMPLE_RATE = 0.05
+DEFAULT_FLEET_SIZE = 225  # config parameter; sweep {150, 225, 300} in Phase 5

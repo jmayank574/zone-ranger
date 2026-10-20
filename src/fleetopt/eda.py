@@ -11,21 +11,24 @@ import duckdb
 import pandas as pd
 
 from fleetopt import constants as C
+from fleetopt.db import connect
 
-# Candidate cleaning rules. Each is the SQL condition for a row to be KEPT.
-# These are proposals for Phase 1 and are evaluated here, not applied to any model data.
+# Drop rules (decision 2026-10-20): each is the SQL condition for a row to be KEPT.
 RULES: dict[str, str] = {
-    "valid_zones": (
-        "PULocationID BETWEEN 1 AND 263 AND DOLocationID BETWEEN 1 AND 263"
-    ),  # null, 264 (Unknown) and 265 (Outside NYC) fall out
+    "valid_zones": "PULocationID BETWEEN 1 AND 263 AND DOLocationID BETWEEN 1 AND 263",
     "trip_time_1_to_180_min": "trip_time BETWEEN 60 AND 10800",
     "trip_miles_0.1_to_100": "trip_miles BETWEEN 0.1 AND 100",
     "base_fare_0_to_500": "base_passenger_fare > 0 AND base_passenger_fare < 500",
+    "request_present": "request_datetime IS NOT NULL",
     "pickup_in_file_month": "pickup_datetime >= month_start AND pickup_datetime < month_end",
-    "request_not_after_pickup": "request_datetime IS NOT NULL AND request_datetime <= pickup_datetime",
-    "pickup_delay_le_3h": "pickup_datetime - request_datetime <= INTERVAL 3 HOUR",
-    "on_scene_not_before_request": "on_scene_datetime IS NULL OR on_scene_datetime >= request_datetime",
     "dropoff_after_pickup": "dropoff_datetime > pickup_datetime",
+}
+# Timestamp anomalies that do NOT drop the row (it still counts as demand and for ETA). They
+# null the wait fields and set wait_invalid so wait calibration excludes them.
+WAIT_ANOMALIES: dict[str, str] = {
+    "request_after_pickup": "request_datetime > pickup_datetime",
+    "on_scene_before_request": "on_scene_datetime < request_datetime",
+    "pickup_delay_gt_3h": "pickup_datetime - request_datetime > INTERVAL 3 HOUR",
 }
 
 GEOFENCE_NEAR_KM = 4.0  # "inner" Brooklyn/Queens = centroid within this of a Manhattan centroid
@@ -39,8 +42,12 @@ def _glob(raw_dir: Path) -> str:
 
 
 def build_base(con: duckdb.DuckDBPyConnection, raw_dir: Path) -> None:
-    """Temp table `base`: raw rows plus rule flags and derived minutes."""
-    flags = ",\n  ".join(f"({cond}) AS ok_{name.replace('.', '_')}" for name, cond in RULES.items())
+    """Table `base`: raw rows plus keep-flags per drop rule, wait_invalid, and derived minutes."""
+    keep = ", ".join(f"({cond}) AS ok_{name.replace('.', '_')}" for name, cond in RULES.items())
+    anomalies = ", ".join(
+        f"coalesce({cond}, false) AS an_{n}" for n, cond in WAIT_ANOMALIES.items()
+    )
+    any_anomaly = " OR ".join(f"an_{n}" for n in WAIT_ANOMALIES)
     con.execute(
         f"""
         CREATE OR REPLACE TABLE base AS
@@ -50,15 +57,24 @@ def build_base(con: duckdb.DuckDBPyConnection, raw_dir: Path) -> None:
           FROM read_parquet('{_glob(raw_dir)}', filename = true, union_by_name = true)
         ), m AS (
           SELECT *, month_start + INTERVAL 1 MONTH AS month_end FROM raw
+        ), f AS (
+          SELECT *, {anomalies}, {keep} FROM m
         )
-        SELECT hvfhs_license_num, request_datetime, on_scene_datetime, pickup_datetime,
-               dropoff_datetime, PULocationID AS pu, DOLocationID AS do_, trip_miles, trip_time,
+        SELECT strftime(month_start, '%Y-%m') AS month, hvfhs_license_num, request_datetime,
+               on_scene_datetime, pickup_datetime, dropoff_datetime,
+               PULocationID AS pu, DOLocationID AS do_, trip_miles, trip_time,
                base_passenger_fare AS fare, driver_pay, shared_request_flag, shared_match_flag,
                wav_request_flag, access_a_ride_flag,
-               date_diff('second', request_datetime, on_scene_datetime) / 60.0 AS wait_min,
-               date_diff('second', request_datetime, pickup_datetime) / 60.0 AS pickup_delay_min,
-          {flags}
-        FROM m
+               ({any_anomaly}) AS wait_invalid,
+               CASE WHEN NOT ({any_anomaly})
+                    THEN date_diff('second', request_datetime, on_scene_datetime) / 60.0 END
+                 AS wait_min,
+               CASE WHEN NOT ({any_anomaly})
+                    THEN date_diff('second', request_datetime, pickup_datetime) / 60.0 END
+                 AS pickup_delay_min,
+               {", ".join(f"an_{n}" for n in WAIT_ANOMALIES)},
+               {", ".join("ok_" + n.replace(".", "_") for n in RULES)}
+        FROM f
         """
     )
 
@@ -90,13 +106,26 @@ def data_quality(con: duckdb.DuckDBPyConnection) -> dict:
         "dropped_share": (total - prev) / total,
         "per_rule_independent_drops": per_rule,
         "sequential_waterfall": waterfall,
-        "note": "Rules are proposals; independent drops overlap, waterfall drops sum to total.",
+        "wait_fields_nulled": wait_flag_counts(con, "clean"),
+        "note": "Independent drops overlap; waterfall drops sum to total. Wait anomalies keep the "
+        "row but null wait fields (wait_invalid=true).",
     }
+
+
+def wait_flag_counts(con: duckdb.DuckDBPyConnection, table: str) -> dict:
+    cols = ", ".join(f"count(*) FILTER (WHERE an_{n}) AS {n}" for n in WAIT_ANOMALIES)
+    row = _q(
+        con,
+        f"SELECT count(*) AS rows, count(*) FILTER (WHERE wait_invalid) AS wait_invalid, {cols} "
+        f"FROM {table}",
+    )[0]
+    row["wait_invalid_share"] = row["wait_invalid"] / row["rows"]
+    return row
 
 
 def build_clean(con: duckdb.DuckDBPyConnection) -> None:
     ok = " AND ".join(f"coalesce(ok_{n.replace('.', '_')}, false)" for n in RULES)
-    con.execute(f"CREATE OR REPLACE TABLE clean AS SELECT * FROM base WHERE {ok}")
+    con.execute(f"CREATE OR REPLACE VIEW clean AS SELECT * FROM base WHERE {ok}")
 
 
 def distributions(con: duckdb.DuckDBPyConnection) -> dict:
@@ -257,11 +286,109 @@ def geofence_options(con: duckdb.DuckDBPyConnection) -> list[dict]:
     return out
 
 
+# Thresholds for flagging a month as materially different from the first (baseline) month.
+MATERIAL = {
+    "license_share_abs": 0.02,
+    "on_scene_null_rate_abs": 0.02,
+    "wait_quantile_rel": 0.10,
+    "drop_share_rel": 0.25,
+    "wait_invalid_share_rel": 0.25,
+}
+
+
+def month_comparison(con: duckdb.DuckDBPyConnection) -> dict:
+    """Per-month license mix, on_scene nulls, wait percentiles, drops; flags vs the first month."""
+    months = [r[0] for r in con.execute("SELECT DISTINCT month FROM base ORDER BY 1").fetchall()]
+    out: dict[str, dict] = {}
+    for m in months:
+        raw = con.execute(f"SELECT count(*) FROM base WHERE month = '{m}'").fetchone()[0]
+        clean = con.execute(f"SELECT count(*) FROM clean WHERE month = '{m}'").fetchone()[0]
+        lic = {
+            r["license"]: r
+            for r in _q(
+                con,
+                f"""SELECT hvfhs_license_num AS license, count(*) * 1.0 / {raw} AS share,
+                       avg((on_scene_datetime IS NULL)::int) AS on_scene_null_rate
+                    FROM base WHERE month = '{m}' GROUP BY 1""",
+            )
+        }
+        wq = con.execute(
+            f"""SELECT approx_quantile(wait_min, [0.5, 0.9, 0.99]) FROM clean
+                WHERE month = '{m}' AND hvfhs_license_num = 'HV0003'"""
+        ).fetchone()[0]
+        pq = con.execute(
+            f"""SELECT approx_quantile(pickup_delay_min, [0.5, 0.9, 0.99]) FROM clean
+                WHERE month = '{m}'"""
+        ).fetchone()[0]
+        drops = {
+            rule: con.execute(
+                f"SELECT count(*) FROM base WHERE month = '{m}' "
+                f"AND NOT coalesce(ok_{rule.replace('.', '_')}, false)"
+            ).fetchone()[0]
+            for rule in RULES
+        }
+        wf = _q(
+            con,
+            f"""SELECT count(*) FILTER (WHERE wait_invalid) * 1.0 / count(*) AS share
+                FROM clean WHERE month = '{m}'""",
+        )[0]
+        out[m] = {
+            "raw_rows": raw,
+            "clean_rows": clean,
+            "dropped_share": 1 - clean / raw,
+            "license_share": {k: v["share"] for k, v in lic.items()},
+            "on_scene_null_rate_by_license": {k: v["on_scene_null_rate"] for k, v in lic.items()},
+            "uber_wait_min_p50_p90_p99": wq,
+            "pickup_delay_min_p50_p90_p99": pq,
+            "independent_drops": drops,
+            "wait_invalid_share_of_clean": wf["share"],
+        }
+    base_m = months[0]
+    b = out[base_m]
+    flags: dict[str, list[str]] = {m: [] for m in months[1:]}
+    for m in months[1:]:
+        c = out[m]
+        for lic in set(b["license_share"]) | set(c["license_share"]):
+            d = abs(c["license_share"].get(lic, 0) - b["license_share"].get(lic, 0))
+            if d > MATERIAL["license_share_abs"]:
+                flags[m].append(
+                    f"license share {lic}: {b['license_share'].get(lic, 0):.3f} -> "
+                    f"{c['license_share'].get(lic, 0):.3f}"
+                )
+        for lic, v in c["on_scene_null_rate_by_license"].items():
+            d = abs(v - b["on_scene_null_rate_by_license"].get(lic, v))
+            if d > MATERIAL["on_scene_null_rate_abs"]:
+                flags[m].append(
+                    f"on_scene null rate {lic}: "
+                    f"{b['on_scene_null_rate_by_license'].get(lic):.3f} -> {v:.3f}"
+                )
+        for key in ("uber_wait_min_p50_p90_p99", "pickup_delay_min_p50_p90_p99"):
+            for name, x, y in zip(("p50", "p90", "p99"), b[key], c[key], strict=True):
+                if abs(y - x) / x > MATERIAL["wait_quantile_rel"]:
+                    flags[m].append(f"{key} {name}: {x:.2f} -> {y:.2f}")
+        if (
+            abs(c["dropped_share"] - b["dropped_share"]) / b["dropped_share"]
+            > MATERIAL["drop_share_rel"]
+        ):
+            flags[m].append(f"drop share: {b['dropped_share']:.4f} -> {c['dropped_share']:.4f}")
+        for rule in RULES:
+            bx, cx = (
+                b["independent_drops"][rule] / b["raw_rows"],
+                c["independent_drops"][rule] / c["raw_rows"],
+            )
+            if bx > 0.001 and abs(cx - bx) / bx > MATERIAL["drop_share_rel"]:
+                flags[m].append(f"rule {rule} drop share: {bx:.4f} -> {cx:.4f}")
+        bw, cw = b["wait_invalid_share_of_clean"], c["wait_invalid_share_of_clean"]
+        if abs(cw - bw) / bw > MATERIAL["wait_invalid_share_rel"]:
+            flags[m].append(f"wait_invalid share: {bw:.4f} -> {cw:.4f}")
+    return {"baseline_month": base_m, "thresholds": MATERIAL, "months": out, "flags": flags}
+
+
 def run(raw_dir: Path = C.RAW_DIR, reports_dir: Path = C.REPORTS_DIR) -> dict:
-    con = duckdb.connect()
+    con = connect()
     build_base(con, raw_dir)
-    dq = data_quality(con)
     build_clean(con)
+    dq = data_quality(con)
     eda = {
         "files": sorted(p.name for p in raw_dir.glob("fhvhv_tripdata_*.parquet")),
         "license_breakdown": license_breakdown(con),
@@ -269,6 +396,7 @@ def run(raw_dir: Path = C.RAW_DIR, reports_dir: Path = C.REPORTS_DIR) -> dict:
         "distributions_clean": distributions(con),
         "demand_profile": demand_profile(con),
         "geofence_options": geofence_options(con),
+        "month_comparison": month_comparison(con),
         "license_names": LICENSES,
     }
     reports_dir.mkdir(parents=True, exist_ok=True)

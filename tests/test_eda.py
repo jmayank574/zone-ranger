@@ -1,10 +1,10 @@
 import json
 from datetime import datetime, timedelta
 
-import duckdb
 import pandas as pd
 
 from fleetopt import eda
+from fleetopt.db import connect
 
 
 def _rows():
@@ -48,12 +48,16 @@ def test_cleaning_rules_and_null_rates_by_license(tmp_path):
     raw = tmp_path / "raw"
     raw.mkdir()
     pd.DataFrame(_rows()).to_parquet(raw / "fhvhv_tripdata_2025-01.parquet")
-    con = duckdb.connect()
+    con = connect()
     eda.build_base(con, raw)
-    dq = eda.data_quality(con)
-    assert dq["raw_rows"] == 5 and dq["clean_rows"] == 2  # good + lyft survive
-    assert sum(w["dropped_here"] for w in dq["sequential_waterfall"]) == dq["dropped_total"] == 3
     eda.build_clean(con)
+    dq = eda.data_quality(con)
+    assert dq["raw_rows"] == 5 and dq["clean_rows"] == 3  # good, lyft, request-after-pickup
+    assert sum(w["dropped_here"] for w in dq["sequential_waterfall"]) == dq["dropped_total"] == 2
+    # request-after-pickup is kept for demand/ETA but its wait fields are nulled and flagged
+    assert dq["wait_fields_nulled"]["wait_invalid"] == 1
+    bad = con.execute("SELECT wait_min, pickup_delay_min FROM clean WHERE wait_invalid").fetchone()
+    assert bad == (None, None)
     lic = {r["license"]: r for r in eda.license_breakdown(con)}
     assert lic["HV0005"]["on_scene_null_rate"] == 1.0
     assert lic["HV0003"]["on_scene_null_rate"] == 0.0
