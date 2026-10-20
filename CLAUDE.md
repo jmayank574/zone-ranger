@@ -24,7 +24,7 @@ Phase 1 results (April 2025 test window, model trained on Jan 8 - Feb 28, test s
 ```
 uv sync --extra dev
 uv run zone-ranger-download [--dev]
-uv run zone-ranger-eda [--dev]
+uv run zone-ranger-eda
 uv run zone-ranger-features [--dev]
 uv run zone-ranger-train [--dev] [--force]   # stages checkpoint; --force retrains all
 uv run python -m pytest --cov=zone_ranger
