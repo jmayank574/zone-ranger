@@ -20,11 +20,20 @@ TARGET_UTILIZATION = 0.6
 LICENSES = {"HV0002": "Juno", "HV0003": "Uber", "HV0004": "Via", "HV0005": "Lyft"}
 
 
-def _glob(raw_dir: Path) -> str:
-    return str(raw_dir / "fhvhv_tripdata_*.parquet").replace("\\", "/")
+def _glob(raw_dir: Path, months: tuple[str, ...] | None = None) -> str:
+    if months is None:
+        return str(raw_dir / "fhvhv_tripdata_*.parquet").replace("\\", "/")
+    # DuckDB accepts a list literal; callers embed it unquoted via _sources().
+    return ", ".join(f"'{(raw_dir / f'fhvhv_tripdata_{m}.parquet').as_posix()}'" for m in months)
 
 
-def build_base(con: duckdb.DuckDBPyConnection, raw_dir: Path) -> None:
+def _sources(raw_dir: Path, months: tuple[str, ...] | None) -> str:
+    return f"[{_glob(raw_dir, months)}]" if months else f"'{_glob(raw_dir)}'"
+
+
+def build_base(
+    con: duckdb.DuckDBPyConnection, raw_dir: Path, months: tuple[str, ...] | None = None
+) -> None:
     """Table `base`: raw rows plus keep-flags per drop rule, wait_invalid, and derived minutes."""
     keep = ", ".join(f"({cond}) AS ok_{name.replace('.', '_')}" for name, cond in RULES.items())
     anomalies = ", ".join(
@@ -37,7 +46,7 @@ def build_base(con: duckdb.DuckDBPyConnection, raw_dir: Path) -> None:
         WITH raw AS (
           SELECT *, strptime(regexp_extract(filename, '(\\d{{4}}-\\d{{2}})', 1) || '-01', '%Y-%m-%d')
                     AS month_start
-          FROM read_parquet('{_glob(raw_dir)}', filename = true, union_by_name = true)
+          FROM read_parquet({_sources(raw_dir, months)}, filename = true, union_by_name = true)
         ), m AS (
           SELECT *, month_start + INTERVAL 1 MONTH AS month_end FROM raw
         ), f AS (
@@ -47,6 +56,7 @@ def build_base(con: duckdb.DuckDBPyConnection, raw_dir: Path) -> None:
                on_scene_datetime, pickup_datetime, dropoff_datetime,
                PULocationID AS pu, DOLocationID AS do_, trip_miles, trip_time,
                CASE WHEN fare_invalid THEN NULL ELSE base_passenger_fare END AS fare, fare_invalid,
+               base_passenger_fare AS fare_raw,
                driver_pay, shared_request_flag, shared_match_flag,
                wav_request_flag, access_a_ride_flag,
                ({any_anomaly}) AS wait_invalid,

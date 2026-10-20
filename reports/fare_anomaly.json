@@ -1,0 +1,215 @@
+{
+  "by_month": [
+    {
+      "month": "2025-01",
+      "rows": 19582955,
+      "fare_le_0": 16261,
+      "share": 0.0008303649781148964
+    },
+    {
+      "month": "2025-02",
+      "rows": 18527639,
+      "fare_le_0": 1690,
+      "share": 9.121507602776587e-05
+    },
+    {
+      "month": "2025-03",
+      "rows": 19621390,
+      "fare_le_0": 60919,
+      "share": 0.003104723977251357
+    },
+    {
+      "month": "2025-04",
+      "rows": 18869386,
+      "fare_le_0": 12740,
+      "share": 0.0006751677028600719
+    }
+  ],
+  "top_days": [
+    {
+      "day": "2025-03-22",
+      "fare_le_0": 16554
+    },
+    {
+      "day": "2025-03-21",
+      "fare_le_0": 15811
+    },
+    {
+      "day": "2025-03-26",
+      "fare_le_0": 14712
+    },
+    {
+      "day": "2025-01-21",
+      "fare_le_0": 13073
+    },
+    {
+      "day": "2025-04-24",
+      "fare_le_0": 12132
+    },
+    {
+      "day": "2025-03-16",
+      "fare_le_0": 11522
+    },
+    {
+      "day": "2025-03-23",
+      "fare_le_0": 473
+    },
+    {
+      "day": "2025-03-17",
+      "fare_le_0": 283
+    },
+    {
+      "day": "2025-04-25",
+      "fare_le_0": 283
+    },
+    {
+      "day": "2025-03-27",
+      "fare_le_0": 259
+    },
+    {
+      "day": "2025-01-17",
+      "fare_le_0": 242
+    },
+    {
+      "day": "2025-01-22",
+      "fare_le_0": 234
+    },
+    {
+      "day": "2025-01-18",
+      "fare_le_0": 179
+    },
+    {
+      "day": "2025-01-19",
+      "fare_le_0": 160
+    },
+    {
+      "day": "2025-01-20",
+      "fare_le_0": 150
+    }
+  ],
+  "by_month_license": [
+    {
+      "month": "2025-01",
+      "license": "HV0005",
+      "fare_le_0": 13111
+    },
+    {
+      "month": "2025-01",
+      "license": "HV0003",
+      "fare_le_0": 3150
+    },
+    {
+      "month": "2025-02",
+      "license": "HV0003",
+      "fare_le_0": 1638
+    },
+    {
+      "month": "2025-02",
+      "license": "HV0005",
+      "fare_le_0": 52
+    },
+    {
+      "month": "2025-03",
+      "license": "HV0005",
+      "fare_le_0": 59491
+    },
+    {
+      "month": "2025-03",
+      "license": "HV0003",
+      "fare_le_0": 1428
+    },
+    {
+      "month": "2025-04",
+      "license": "HV0005",
+      "fare_le_0": 12458
+    },
+    {
+      "month": "2025-04",
+      "license": "HV0003",
+      "fare_le_0": 282
+    }
+  ],
+  "by_month_driver_pay": [
+    {
+      "month": "2025-01",
+      "driver_pay_status": "positive",
+      "fare_le_0": 16261
+    },
+    {
+      "month": "2025-02",
+      "driver_pay_status": "positive",
+      "fare_le_0": 1637
+    },
+    {
+      "month": "2025-02",
+      "driver_pay_status": "zero",
+      "fare_le_0": 53
+    },
+    {
+      "month": "2025-03",
+      "driver_pay_status": "positive",
+      "fare_le_0": 60893
+    },
+    {
+      "month": "2025-03",
+      "driver_pay_status": "zero",
+      "fare_le_0": 26
+    },
+    {
+      "month": "2025-04",
+      "driver_pay_status": "positive",
+      "fare_le_0": 12733
+    },
+    {
+      "month": "2025-04",
+      "driver_pay_status": "zero",
+      "fare_le_0": 7
+    }
+  ],
+  "by_month_zero_vs_negative": [
+    {
+      "month": "2025-01",
+      "kind": "negative",
+      "fare_le_0": 2348
+    },
+    {
+      "month": "2025-01",
+      "kind": "zero",
+      "fare_le_0": 13913
+    },
+    {
+      "month": "2025-02",
+      "kind": "negative",
+      "fare_le_0": 502
+    },
+    {
+      "month": "2025-02",
+      "kind": "zero",
+      "fare_le_0": 1188
+    },
+    {
+      "month": "2025-03",
+      "kind": "negative",
+      "fare_le_0": 362
+    },
+    {
+      "month": "2025-03",
+      "kind": "zero",
+      "fare_le_0": 60557
+    },
+    {
+      "month": "2025-04",
+      "kind": "negative",
+      "fare_le_0": 203
+    },
+    {
+      "month": "2025-04",
+      "kind": "zero",
+      "fare_le_0": 12537
+    }
+  ],
+  "other_invalid": {
+    "fare_null": 0,
+    "fare_ge_500": 17
+  }
+}
