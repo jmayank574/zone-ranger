@@ -21,3 +21,17 @@ along the way.
 6. **Storage:** everything on D:. `data/raw` (including `.part` files), `data/duckdb_tmp` (DuckDB
    spill dir, set on every connection via `fleetopt.db.connect`), the DuckDB file, `artifacts/`,
    `reports/` and `.venv` all resolve under `D:\FleetOp`. `UV_CACHE_DIR` moves to `D:\uv-cache`.
+
+### 2026-10-20 — Phase 0 follow-ups (before Phase 1)
+
+7. **Wait calibration is Uber-only in all months** (Lyft `on_scene_datetime` only exists from
+   2025-03-06). Data card must state that waits are observed for completed trips only (cancelled
+   requests are not in the data), so the simulator's patience/abandonment threshold is an
+   assumption informed by the wait tail, not a measured value. Phase 2: quick check comparing Lyft
+   vs Uber wait distributions for Mar 6 – Apr.
+8. **Fares <= 0 or >= 500 are not dropped.** Keep the row, null the fare, set `fare_invalid` (same
+   pattern as `wait_invalid`). Exclude flagged rows from fare-based work only (value model, revenue
+   metrics). Phase 1: break down zero-fare rows by day, license and `driver_pay` and report what
+   explains the March spike (64k rows with fare <= 0 vs 1.7k in Feb).
+9. **Demand model forecasts full (unsampled) servable Manhattan demand at request time** (pickup
+   and dropoff both in the geofence). The 5% sampling applies only inside the simulator.
