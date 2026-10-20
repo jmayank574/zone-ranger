@@ -17,11 +17,11 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics import mean_poisson_deviance
 
-from fleetopt import artifacts as A
-from fleetopt import constants as C
-from fleetopt import zones
-from fleetopt.db import connect
-from fleetopt.travel import TravelMatrix, band_of_hour
+from zone_ranger import artifacts as A
+from zone_ranger import constants as C
+from zone_ranger import zones
+from zone_ranger.db import connect
+from zone_ranger.travel import TravelMatrix, band_of_hour
 
 ETA_SAMPLE_ROWS = 2_000_000
 ETA_VAL_ES_ROWS = 1_000_000  # val rows used for early stopping / selection; metrics use all val
@@ -317,6 +317,30 @@ def train_demand(con, splits, zone_ids, fast: bool) -> tuple[dict, A.DemandBundl
 # ------------------------------------------------------------------ driver
 
 
+def _stage(artifacts_dir: Path, name: str, splits: dict, force: bool, build, save, load):
+    """Checkpointed stage: reuse artifacts from a previous run unless `force` or the splits changed.
+
+    `build()` returns (results, artifact); `save(artifact)` / `load()` persist it. The results
+    JSON is written last, so a run killed mid-stage leaves no checkpoint behind.
+    """
+    meta = artifacts_dir / f"{name}_results.json"
+    wanted = {k: list(v) for k, v in splits.items()}
+    if not force and meta.exists():
+        saved = json.loads(meta.read_text())
+        if saved["splits"] == wanted:
+            try:
+                art = load()
+            except FileNotFoundError:
+                art = None
+            if art is not None:
+                print(f"[train] {name}: reusing checkpoint (use --force to retrain)", flush=True)
+                return saved["results"], art
+    results, art = build()
+    save(art)
+    meta.write_text(json.dumps({"splits": wanted, "results": results}))
+    return results, art
+
+
 def train_all(
     con: duckdb.DuckDBPyConnection,
     splits: dict[str, tuple[str, str]],
@@ -324,23 +348,36 @@ def train_all(
     artifacts_dir: Path,
     report_path: Path,
     fast: bool = False,
+    force: bool = False,
 ) -> dict:
     _test_calls.clear()
-    cen = _Centroids(zone_ids)
-    tm_trips = con.execute(
-        f"""SELECT pu, do_, hour, duration_min, trip_miles FROM trips WHERE servable
-            AND request_datetime >= TIMESTAMP '{splits["train"][0]}'
-            AND request_datetime < TIMESTAMP '{splits["train"][1]}'"""
-    ).df()
-    travel = TravelMatrix.fit(tm_trips, zone_ids, min_trips=5 if fast else C.TRAVEL_MIN_TRIPS)
-    del tm_trips
-    eta, eta_bundle = train_eta(con, splits, zone_ids, cen, fast)
-    demand, demand_bundle = train_demand(con, splits, zone_ids, fast)
-
     artifacts_dir.mkdir(parents=True, exist_ok=True)
-    A.save_bundle(eta_bundle, artifacts_dir / "eta_bundle.joblib")
-    A.save_bundle(demand_bundle, artifacts_dir / "demand_bundle.joblib")
-    joblib.dump(travel, artifacts_dir / "travel.joblib")
+    cen = _Centroids(zone_ids)
+
+    def build_travel():
+        tm_trips = con.execute(
+            f"""SELECT pu, do_, hour, duration_min, trip_miles FROM trips WHERE servable
+                AND request_datetime >= TIMESTAMP '{splits["train"][0]}'
+                AND request_datetime < TIMESTAMP '{splits["train"][1]}'"""
+        ).df()
+        tm = TravelMatrix.fit(tm_trips, zone_ids, min_trips=5 if fast else C.TRAVEL_MIN_TRIPS)
+        return {}, tm
+
+    path = artifacts_dir / "travel.joblib"
+    _, travel = _stage(
+        artifacts_dir, "travel", splits, force, build_travel,
+        lambda a: joblib.dump(a, path), lambda: joblib.load(path),
+    )  # fmt: skip
+    path = artifacts_dir / "eta_bundle.joblib"
+    eta, _ = _stage(
+        artifacts_dir, "eta", splits, force, lambda: train_eta(con, splits, zone_ids, cen, fast),
+        lambda b: A.save_bundle(b, path), lambda: A.load_eta_bundle(path),
+    )  # fmt: skip
+    path = artifacts_dir / "demand_bundle.joblib"
+    demand, _ = _stage(
+        artifacts_dir, "demand", splits, force, lambda: train_demand(con, splits, zone_ids, fast),
+        lambda b: A.save_bundle(b, path), lambda: A.load_demand_bundle(path),
+    )  # fmt: skip
 
     report = {
         "splits": {k: list(v) for k, v in splits.items()},
@@ -356,18 +393,20 @@ def train_all(
     return report
 
 
-def run(dev: bool = False) -> dict:
+def run(dev: bool = False, force: bool = False) -> dict:
     con = connect(C.DEV_DUCKDB_PATH if dev else C.DUCKDB_PATH)
     splits = C.DEV_SPLITS if dev else C.SPLITS
     art = C.ARTIFACTS_DIR / "dev" if dev else C.ARTIFACTS_DIR
     rep = C.REPORTS_DIR / ("evaluation_dev.json" if dev else "evaluation.json")
-    return train_all(con, splits, zones.geofence_zone_ids(), art, rep, fast=dev)
+    return train_all(con, splits, zones.geofence_zone_ids(), art, rep, fast=dev, force=force)
 
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--dev", action="store_true", help="small grids; uses the dev database")
-    report = run(dev=ap.parse_args().dev)
+    ap.add_argument("--force", action="store_true", help="retrain every stage, ignore checkpoints")
+    args = ap.parse_args()
+    report = run(dev=args.dev, force=args.force)
     d, e = report["demand"], report["eta"]
     print(
         f"demand test WMAPE {d['test']['wmape']:.4f} vs last-week "

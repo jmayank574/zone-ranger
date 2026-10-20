@@ -1,6 +1,6 @@
 import duckdb
 
-from fleetopt import cleaning, eda
+from zone_ranger import cleaning, eda
 
 
 def test_fare_rule_flags_not_drops():

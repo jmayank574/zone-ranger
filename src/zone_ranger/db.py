@@ -4,7 +4,7 @@ from pathlib import Path
 
 import duckdb
 
-from fleetopt import constants as C
+from zone_ranger import constants as C
 
 
 def connect(path: Path | str | None = None) -> duckdb.DuckDBPyConnection:

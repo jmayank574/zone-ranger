@@ -12,7 +12,7 @@ from pyproj import Transformer
 from shapely.geometry import shape
 from shapely.ops import unary_union
 
-from fleetopt import constants as C
+from zone_ranger import constants as C
 
 MIN_VALID_BYTES = 1_000_000
 
@@ -27,7 +27,7 @@ def _fetch(url: str, target: Path) -> Path:
         return target
     target.parent.mkdir(parents=True, exist_ok=True)
     part = target.with_suffix(target.suffix + ".part")
-    request = urllib.request.Request(url, headers={"User-Agent": "fleetopt/0.1"})
+    request = urllib.request.Request(url, headers={"User-Agent": "zone_ranger/0.1"})
     with urllib.request.urlopen(request, timeout=120) as response, part.open("wb") as out:
         shutil.copyfileobj(response, out)
     part.replace(target)

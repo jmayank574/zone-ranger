@@ -7,7 +7,7 @@ DATA_DIR = ROOT / "data"
 RAW_DIR = DATA_DIR / "raw"
 REPORTS_DIR = ROOT / "reports"
 ARTIFACTS_DIR = ROOT / "artifacts"
-DUCKDB_PATH = DATA_DIR / "fleetopt.duckdb"  # persistent DB used from Phase 1
+DUCKDB_PATH = DATA_DIR / "zone_ranger.duckdb"  # persistent DB used from Phase 1
 DUCKDB_TMP_DIR = DATA_DIR / "duckdb_tmp"  # spill directory; keeps DuckDB off the C: drive
 
 TLC_TRIP_URL = "https://d37ci6vzurychx.cloudfront.net/trip-data"
@@ -55,7 +55,7 @@ DEV_SPLITS = {
 }
 GRID_BOUNDS = ("2025-01-01", "2025-05-01")
 DEV_GRID_BOUNDS = ("2025-01-01", "2025-01-22")
-DEV_DUCKDB_PATH = DATA_DIR / "fleetopt_dev.duckdb"
+DEV_DUCKDB_PATH = DATA_DIR / "zone_ranger_dev.duckdb"
 DEV_THIN_PERCENT = 1  # keep ~1% of trips in --dev (deterministic hash filter)
 LOCAL_TZ = "America/New_York"  # raw timestamps are naive local time
 

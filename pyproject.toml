@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "fleetopt"
+name = "zone-ranger"
 version = "0.1.0"
 description = "Autonomous fleet marketplace optimizer on NYC HVFHV data"
 requires-python = ">=3.11"
@@ -28,15 +28,15 @@ dependencies = [
 dev = ["pytest>=8", "pytest-cov>=5", "ruff>=0.5", "httpx>=0.27"]
 
 [project.scripts]
-fleetopt-download = "fleetopt.download:main"
-fleetopt-eda = "fleetopt.eda:main"
-fleetopt-features = "fleetopt.features:main"
-fleetopt-train = "fleetopt.train:main"
-fleetopt-replay = "fleetopt.stubs:replay"
-fleetopt-experiment = "fleetopt.stubs:experiment"
+zone-ranger-download = "zone_ranger.download:main"
+zone-ranger-eda = "zone_ranger.eda:main"
+zone-ranger-features = "zone_ranger.features:main"
+zone-ranger-train = "zone_ranger.train:main"
+zone-ranger-replay = "zone_ranger.stubs:replay"
+zone-ranger-experiment = "zone_ranger.stubs:experiment"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/fleetopt"]
+packages = ["src/zone_ranger"]
 
 [tool.ruff]
 line-length = 100
@@ -51,7 +51,7 @@ testpaths = ["tests"]
 addopts = "-q"
 
 [tool.ruff.lint.per-file-ignores]
-"src/fleetopt/eda.py" = ["E501"]  # long SQL strings
+"src/zone_ranger/eda.py" = ["E501"]  # long SQL strings
 
 [tool.coverage.run]
-omit = ["src/fleetopt/stubs.py"]
+omit = ["src/zone_ranger/stubs.py"]

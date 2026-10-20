@@ -89,8 +89,8 @@ Why HVFHV over yellow taxi: it is ride-hailing (Waymo's business), and it has `r
 ## 5. Repo layout (target)
 
 ```
-fleetopt/
-├── src/fleetopt/
+zone-ranger/
+├── src/zone_ranger/
 │   ├── constants.py       # months, splits, geofence, paths, seeds
 │   ├── download.py        # fetch Parquet + zone lookup/shapefile
 │   ├── features.py        # DuckDB: clean trips, ETA/demand/value feature tables
@@ -112,7 +112,7 @@ fleetopt/
 └── README.md
 ```
 
-CLI entry points: `fleetopt-download`, `fleetopt-features`, `fleetopt-train`, `fleetopt-replay`, `fleetopt-experiment`.
+CLI entry points: `zone-ranger-download`, `zone-ranger-eda`, `zone-ranger-features`, `zone-ranger-train`, `zone-ranger-replay`, `zone-ranger-experiment`.
 
 Stack: Python 3.11+, DuckDB, pandas, numpy, LightGBM, scikit-learn, OR-Tools (CP-SAT), FastAPI, Pydantic, prometheus-client, pytest, ruff.
 
@@ -200,8 +200,8 @@ Work one phase at a time. **At the end of each phase: run tests and ruff, commit
    `wait_invalid = true` so wait calibration excludes them.
 5. **Coverage:** `stubs.py` omitted from coverage until the stages exist.
 6. **Storage:** everything on D:. `data/raw` (including `.part` files), `data/duckdb_tmp` (DuckDB
-   spill dir, set on every connection via `fleetopt.db.connect`), the DuckDB file, `artifacts/`,
-   `reports/` and `.venv` all resolve under `D:\FleetOp`. `UV_CACHE_DIR` moves to `D:\uv-cache`.
+   spill dir, set on every connection via `zone_ranger.db.connect`), the DuckDB file, `artifacts/`,
+   `reports/` and `.venv` all resolve under the project folder on D:. `UV_CACHE_DIR` moves to `D:\uv-cache`.
 
 ### 2026-10-20 — Phase 0 follow-ups (before Phase 1)
 
@@ -216,3 +216,13 @@ Work one phase at a time. **At the end of each phase: run tests and ruff, commit
    explains the March spike (64k rows with fare <= 0 vs 1.7k in Feb).
 9. **Demand model forecasts full (unsampled) servable Manhattan demand at request time** (pickup
    and dropoff both in the geofence). The 5% sampling applies only inside the simulator.
+
+### 2026-10-20 — Rename and housekeeping (before Phase 2)
+
+10. **Project renamed to Zone Ranger.** Package `zone_ranger` (`src/zone_ranger`), CLIs
+    `zone-ranger-*`, DuckDB files `data/zone_ranger{,_dev}.duckdb`. Old joblib artifacts pickle the
+    old module path and cannot load; `artifacts/` was deleted and Phase 2 retrains.
+11. **Training checkpoints per stage** (travel / eta / demand): a stage is skipped if its artifact
+    and `<stage>_results.json` exist and the splits match; `zone-ranger-train --force` retrains
+    everything. Long runs are launched with `python -u` so logs stream.
+12. **Regression test** for NULL-containing integer lag columns (DuckDB returns nullable `Int64`).

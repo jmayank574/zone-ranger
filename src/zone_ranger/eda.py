@@ -10,9 +10,9 @@ from pathlib import Path
 import duckdb
 import pandas as pd
 
-from fleetopt import constants as C
-from fleetopt.cleaning import FARE_INVALID, RULES, WAIT_ANOMALIES
-from fleetopt.db import connect
+from zone_ranger import constants as C
+from zone_ranger.cleaning import FARE_INVALID, RULES, WAIT_ANOMALIES
+from zone_ranger.db import connect
 
 GEOFENCE_NEAR_KM = 4.0  # "inner" Brooklyn/Queens = centroid within this of a Manhattan centroid
 LAT_96TH_ST = 40.7855

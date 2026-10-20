@@ -1,5 +1,5 @@
-from fleetopt import constants as C
-from fleetopt import db
+from zone_ranger import constants as C
+from zone_ranger import db
 
 
 def test_connect_sets_temp_directory_under_repo(tmp_path, monkeypatch):

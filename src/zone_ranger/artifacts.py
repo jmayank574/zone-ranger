@@ -13,8 +13,8 @@ import joblib
 import numpy as np
 import pandas as pd
 
-from fleetopt import constants as C
-from fleetopt.travel import band_of_hour
+from zone_ranger import constants as C
+from zone_ranger.travel import band_of_hour
 
 MIN_COUNT = 20  # smallest group whose median is trusted
 

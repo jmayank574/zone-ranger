@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from fleetopt import artifacts as A
+from zone_ranger import artifacts as A
 
 
 def _train():

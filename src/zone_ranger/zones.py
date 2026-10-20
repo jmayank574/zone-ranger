@@ -1,9 +1,9 @@
-"""Zone lookups backed by data/zones.parquet (built by fleetopt-download)."""
+"""Zone lookups backed by data/zones.parquet (built by zone-ranger-download)."""
 
 import numpy as np
 import pandas as pd
 
-from fleetopt import constants as C
+from zone_ranger import constants as C
 
 
 def load_zones() -> pd.DataFrame:

@@ -12,9 +12,9 @@ from zoneinfo import ZoneInfo
 
 import duckdb
 
-from fleetopt import constants as C
-from fleetopt import eda, fare_anomaly, zones
-from fleetopt.db import connect
+from zone_ranger import constants as C
+from zone_ranger import eda, fare_anomaly, zones
+from zone_ranger.db import connect
 
 
 def dst_gap_slots(start: str, end: str) -> list[datetime]:

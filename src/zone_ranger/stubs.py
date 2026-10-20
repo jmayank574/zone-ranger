@@ -2,7 +2,7 @@
 
 
 def _todo(stage: str, phase: int) -> None:
-    raise SystemExit(f"fleetopt-{stage} is not implemented yet (planned for Phase {phase}).")
+    raise SystemExit(f"zone-ranger-{stage} is not implemented yet (planned for Phase {phase}).")
 
 
 def replay() -> None:

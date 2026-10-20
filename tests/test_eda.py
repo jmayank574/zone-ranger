@@ -3,8 +3,8 @@ from datetime import datetime, timedelta
 
 import pandas as pd
 
-from fleetopt import eda
-from fleetopt.db import connect
+from zone_ranger import eda
+from zone_ranger.db import connect
 
 
 def _rows():

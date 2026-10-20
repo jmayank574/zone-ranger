@@ -8,7 +8,7 @@ the TLC taxi zone lookup and zone shapefile (centroids). Licenses: HV0003 Uber, 
 Splits (request time, [start, end)): train 2025-01-08..03-01, validation March, test April
 minus its last 30 minutes. January 1-7 only feeds lag features.
 
-## Cleaning (`src/fleetopt/cleaning.py`, shared by `eda.py` and `features.py`)
+## Cleaning (`src/zone_ranger/cleaning.py`, shared by `eda.py` and `features.py`)
 * **Dropped (4.29% of raw, 76.6M rows kept):** invalid zones (outside 1-263), trip time outside
   1-180 min, trip miles outside 0.1-100, missing request time, pickup outside its file month,
   dropoff not after pickup. Per-rule counts: `reports/data_quality.json`.

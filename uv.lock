@@ -253,7 +253,7 @@ wheels = [
 ]
 
 [[package]]
-name = "fleetopt"
+name = "zone-ranger"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [

@@ -9,8 +9,8 @@ from dataclasses import dataclass, field
 import numpy as np
 import pandas as pd
 
-from fleetopt import constants as C
-from fleetopt import zones
+from zone_ranger import constants as C
+from zone_ranger import zones
 
 LEVELS = ("pair_band", "pair_all_day", "pickup_zone", "haversine")
 KM_PER_MILE = 1.609344

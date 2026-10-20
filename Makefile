@@ -4,28 +4,28 @@ install:
 	uv sync --extra dev
 
 download:
-	uv run fleetopt-download
+	uv run zone-ranger-download
 
 dev-download:
-	uv run fleetopt-download --dev
+	uv run zone-ranger-download --dev
 
 eda:
-	uv run fleetopt-eda
+	uv run zone-ranger-eda
 
 features:
-	uv run fleetopt-features
+	uv run zone-ranger-features
 
 train:
-	uv run fleetopt-train
+	uv run zone-ranger-train
 
 replay:
-	uv run fleetopt-replay
+	uv run zone-ranger-replay
 
 experiment:
-	uv run fleetopt-experiment
+	uv run zone-ranger-experiment
 
 test:
-	uv run pytest --cov=fleetopt
+	uv run pytest --cov=zone_ranger
 
 lint:
 	uv run ruff check .

@@ -1,7 +1,7 @@
 import shapefile
 from shapely.geometry import box
 
-from fleetopt import download as D
+from zone_ranger import download as D
 
 
 def test_month_url():

@@ -2,8 +2,8 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from fleetopt import travel, zones
-from fleetopt.travel import TravelMatrix
+from zone_ranger import travel, zones
+from zone_ranger.travel import TravelMatrix
 
 ZONES = [4, 5, 6]
 CEN = pd.DataFrame({"zone": ZONES, "lat": [40.70, 40.75, 40.80], "lon": [-74.0, -73.98, -73.96]})

@@ -8,7 +8,7 @@ from pathlib import Path
 
 import duckdb
 
-from fleetopt import constants as C
+from zone_ranger import constants as C
 
 _PAY = (
     "CASE WHEN driver_pay IS NULL THEN 'null' WHEN driver_pay = 0 THEN 'zero' ELSE 'positive' END"

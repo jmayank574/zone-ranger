@@ -3,9 +3,9 @@ from datetime import datetime, timedelta
 import pandas as pd
 import pytest
 
-from fleetopt import constants as C
-from fleetopt import features, zones
-from fleetopt.db import connect
+from zone_ranger import constants as C
+from zone_ranger import features, zones
+from zone_ranger.db import connect
 
 ZONES = [4, 5, 6]
 

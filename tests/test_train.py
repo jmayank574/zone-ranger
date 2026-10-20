@@ -5,8 +5,8 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from fleetopt import artifacts, features, train, zones
-from fleetopt.db import connect
+from zone_ranger import artifacts, features, train, zones
+from zone_ranger.db import connect
 
 ZONES = [4, 5, 6]
 CEN = pd.DataFrame({"zone": ZONES, "lat": [40.70, 40.75, 40.80], "lon": [-74.0, -73.98, -73.96]})
@@ -84,3 +84,37 @@ def test_metrics_definitions():
     assert m["wmape"] == pytest.approx(2 / 6)
     assert m["pred_to_actual_total"] == pytest.approx(1.0)
     assert train.reg_metrics([1, 2], [1, 4])["rmse"] == pytest.approx(np.sqrt(2))
+
+
+def test_null_integer_lag_columns_train(synthetic_con, tmp_path):
+    """DuckDB returns lag_* as nullable Int64; the NULL weekly lag in the first week must not break
+    float fillna in the baselines or LightGBM."""
+    # wipe the weekly and daily lags early in the window so NULLs reach train/val rows
+    synthetic_con.execute(
+        "UPDATE demand_features SET lag_672 = NULL, lag_96 = NULL WHERE slot_ts < '2025-01-16'"
+    )
+    df = synthetic_con.execute("SELECT * FROM demand_features WHERE split IS NOT NULL").df()
+    assert str(df["lag_672"].dtype) == "Int64" and df["lag_672"].isna().any()
+    out, _ = train.train_demand(synthetic_con, SPLITS, ZONES, fast=True)
+    assert out["val"]["wmape"] >= 0
+    assert out["baselines"]["same_slot_last_week"]["val"]["wmape"] >= 0
+
+
+def test_checkpointing_skips_and_force_retrains(synthetic_con, tmp_path, monkeypatch):
+    args = (synthetic_con, SPLITS, ZONES, tmp_path / "art", tmp_path / "e.json", True)
+    first = train.train_all(*args)
+    calls = []
+    for name in ("train_eta", "train_demand"):
+        real = getattr(train, name)
+        monkeypatch.setattr(
+            train, name, lambda *a, _r=real, _n=name, **k: calls.append(_n) or _r(*a, **k)
+        )
+    second = train.train_all(*args)
+    assert calls == []  # every stage reused
+    assert second["eta"]["main"]["test"] == first["eta"]["main"]["test"]
+    assert second["demand"]["test"] == first["demand"]["test"]
+    (tmp_path / "art" / "demand_bundle.joblib").unlink()  # partial checkpoint: only demand reruns
+    train.train_all(*args)
+    assert calls == ["train_demand"]
+    train.train_all(*args, force=True)
+    assert calls == ["train_demand", "train_eta", "train_demand"]

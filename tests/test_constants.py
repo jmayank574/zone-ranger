@@ -1,4 +1,4 @@
-from fleetopt import constants as C
+from zone_ranger import constants as C
 
 
 def test_splits_are_strictly_ordered_and_disjoint():
